@@ -1,0 +1,201 @@
+{
+  "experiment_id": "experiment-20261101T174846Z-a4a56e16",
+  "created_at": "2026-11-01T17:48:46.878285+00:00",
+  "configuration": {
+    "datasets": [
+      "dataset_40"
+    ],
+    "objectives": [
+      "cost"
+    ],
+    "source": "C01",
+    "destination": "C07",
+    "repeats": 1
+  },
+  "combination_count": 1,
+  "algorithm_execution_count": 4,
+  "records": [
+    {
+      "algorithm": "dijkstra",
+      "objective": "cost",
+      "run": 1,
+      "source": "C01",
+      "destination": "C07",
+      "valid": true,
+      "cost": 1450.8500000000001,
+      "time": 15.27,
+      "emissions": 68.73,
+      "objective_value": 1450.8500000000001,
+      "optimality_gap": 0.0,
+      "execution_time_ms": 1.3002999912714586,
+      "peak_memory_bytes": 5448,
+      "nodes_explored": null,
+      "function_evaluations": null,
+      "convergence": [],
+      "nodes": [
+        "C01",
+        "C03",
+        "C07"
+      ],
+      "edge_ids": [
+        "C01_C03_rail",
+        "C03_C07_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_40"
+    },
+    {
+      "algorithm": "astar",
+      "objective": "cost",
+      "run": 1,
+      "source": "C01",
+      "destination": "C07",
+      "valid": true,
+      "cost": 1450.8500000000001,
+      "time": 15.27,
+      "emissions": 68.73,
+      "objective_value": 1450.8500000000001,
+      "optimality_gap": 0.0,
+      "execution_time_ms": 2.127699990523979,
+      "peak_memory_bytes": 3408,
+      "nodes_explored": null,
+      "function_evaluations": null,
+      "convergence": [],
+      "nodes": [
+        "C01",
+        "C03",
+        "C07"
+      ],
+      "edge_ids": [
+        "C01_C03_rail",
+        "C03_C07_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_40"
+    },
+    {
+      "algorithm": "nsga2",
+      "objective": "cost",
+      "run": 1,
+      "source": "C01",
+      "destination": "C07",
+      "valid": true,
+      "cost": 2111.03,
+      "time": 22.25,
+      "emissions": 146.54000000000002,
+      "objective_value": 2111.03,
+      "optimality_gap": 0.45502981011131405,
+      "execution_time_ms": 510.73860000178684,
+      "peak_memory_bytes": 757757,
+      "nodes_explored": null,
+      "function_evaluations": 30,
+      "convergence": [
+        2111.03,
+        2111.03,
+        2111.03
+      ],
+      "nodes": [
+        "C01",
+        "C30",
+        "C28",
+        "C22",
+        "C08",
+        "C03",
+        "C07"
+      ],
+      "edge_ids": [
+        "C01_C30_rail",
+        "C30_C28_road",
+        "C28_C22_waterway",
+        "C22_C08_rail",
+        "C08_C03_rail",
+        "C03_C07_rail"
+      ],
+      "modes": [
+        "rail",
+        "road",
+        "waterway",
+        "rail",
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_40"
+    },
+    {
+      "algorithm": "simulated_annealing",
+      "objective": "cost",
+      "run": 1,
+      "source": "C01",
+      "destination": "C07",
+      "valid": true,
+      "cost": 1694.09,
+      "time": 17.83,
+      "emissions": 80.25,
+      "objective_value": 1694.09,
+      "optimality_gap": 0.16765344453251527,
+      "execution_time_ms": 204.10970000375528,
+      "peak_memory_bytes": 21864,
+      "nodes_explored": null,
+      "function_evaluations": 31,
+      "convergence": [
+        6220.07,
+        5069.35,
+        4763.45,
+        4763.45,
+        4335.55,
+        3686.9399999999996,
+        3686.9399999999996,
+        1694.09,
+        1694.09,
+        1694.09,
+        1694.09,
+        1694.09,
+        1694.09,
+        1694.09,
+        1694.09,
+        1694.09,
+        1694.09,
+        1694.09,
+        1694.09,
+        1694.09,
+        1694.09,
+        1694.09,
+        1694.09,
+        1694.09,
+        1694.09,
+        1694.09,
+        1694.09,
+        1694.09,
+        1694.09,
+        1694.09,
+        1694.09
+      ],
+      "nodes": [
+        "C01",
+        "C03",
+        "C31",
+        "C03",
+        "C07"
+      ],
+      "edge_ids": [
+        "C01_C03_rail",
+        "C03_C31_rail",
+        "C31_C03_rail",
+        "C03_C07_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail",
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_40"
+    }
+  ]
+}

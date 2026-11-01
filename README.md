@@ -12,6 +12,12 @@ Cost, travel time, and carbon emissions are optimized independently. The
 transport attributes are simulated development data; city coordinates are
 manually curated reference data. See [datasets/README.md](datasets/README.md).
 
+The Streamlit dashboard also includes an interactive India route map. It uses
+Folium, Streamlit-Folium and OpenStreetMap tiles to display the existing route
+returned by one selected algorithm at a time. Route records retain the exact
+transport connection IDs and modes, including parallel edges between the same
+cities.
+
 ## Setup
 
 ```powershell
@@ -50,6 +56,31 @@ run experiments automatically. Results are saved as CSV and JSON files under
 `experiments/results/`. These generated result files are experiment artifacts
 and should be retained only when the corresponding run is intentionally
 recorded.
+
+After an experiment completes, use the **Route Visualization** section to
+select Dijkstra, A*, NSGA-II or Simulated Annealing, then click **View Route on
+Map**. The map uses the selected algorithm's existing result and does not run
+the algorithm again when the selection changes.
+
+The four experiment parameter information icons provide Markdown-formatted
+guidance covering each parameter's purpose, recommended quick-test and
+benchmarking ranges, when to increase it, and the computational trade-off.
+
+Route-map legend:
+
+| Transport mode | Colour | Line style |
+|---|---|---|
+| Road | Blue | Solid |
+| Rail | Red | Dashed |
+| Air | Purple | Dotted |
+| Waterways | Green | Dash-dot |
+
+The map legend uses high-contrast black text on a white panel with a subtle
+grey border so its labels remain readable over the map.
+
+The map is schematic: it draws straight city-to-city connections using the
+coordinates in the selected dataset. It does not show actual road, railway,
+flight or navigable waterway geometries.
 
 ## Backend usage
 

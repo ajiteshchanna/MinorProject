@@ -7,9 +7,15 @@ from pathlib import Path
 import pandas as pd
 import plotly.express as px
 import streamlit as st
+from streamlit_folium import st_folium
 
 from backend.experiment_manager import ExperimentManager, ExperimentResult
 from backend.graph import load_graph
+from app.components.route_map import (
+    RouteMapError,
+    create_route_map,
+    prepare_route_map_data,
+)
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DATASETS_ROOT = PROJECT_ROOT / "datasets" / "processed"
@@ -19,6 +25,90 @@ OBJECTIVE_LABELS = {
     "cost": "Cost",
     "time": "Travel time",
     "emissions": "Carbon emissions",
+}
+ALGORITHM_LABELS = {
+    "dijkstra": "Dijkstra",
+    "astar": "A*",
+    "nsga2": "NSGA-II",
+    "simulated_annealing": "Simulated Annealing",
+}
+PARAMETER_HELP = {
+    "repeats": """
+**What it controls**
+Number of independent executions of each algorithm for the same experiment configuration.
+
+**Why it matters**
+Repeated executions help assess consistency and calculate mean, median and standard deviation for execution time and memory consumption.
+
+**Recommended values**
+- **1 repetition:** Quick functional testing; fastest option, but does not establish reliable benchmark statistics.
+- **3–5 repetitions:** Preliminary comparisons during development.
+- **10 repetitions:** Recommended starting point for experimental benchmarking.
+- **20–30 repetitions:** More reliable statistical comparisons when computational resources permit.
+
+**When to increase it**
+Increase repetitions when measuring stochastic algorithm performance or when execution-time variability is high.
+
+**Computational trade-off**
+More repetitions increase total experiment execution time.
+""",
+    "population": """
+**What it controls**
+Number of candidate solutions maintained in each NSGA-II population.
+
+**Why it matters**
+Population size influences the diversity of candidate solutions and how extensively the algorithm explores the search space.
+
+**Recommended values**
+- **10–20:** Quick functional testing and small experiments.
+- **30–50:** Preliminary optimization experiments.
+- **50–100:** Recommended starting range for more serious benchmarking.
+- **100–200:** Larger search populations when computational resources permit.
+
+**When to increase it**
+Increase population size when the search space is large or the algorithm is struggling to discover diverse and high-quality solutions.
+
+**Computational trade-off**
+Larger populations generally increase evaluation cost and memory consumption.
+""",
+    "generations": """
+**What it controls**
+Number of evolutionary cycles performed by NSGA-II.
+
+**Why it matters**
+Each generation provides opportunities for selection, crossover and mutation to improve the candidate population.
+
+**Recommended values**
+- **3–5:** Quick functional testing.
+- **20–50:** Preliminary optimization experiments.
+- **100:** Recommended starting point for serious benchmarking.
+- **200–500:** More extensive optimization experiments when computational resources permit.
+
+**When to increase it**
+Increase generations when solution quality is still improving and the algorithm has not sufficiently converged.
+
+**Computational trade-off**
+More generations increase execution time. More generations do not guarantee a better result in every run.
+""",
+    "iterations": """
+**What it controls**
+Number of neighbourhood-search iterations performed by Simulated Annealing.
+
+**Why it matters**
+Each iteration explores a neighbouring candidate solution and decides whether to accept it based on the objective and current temperature.
+
+**Recommended values**
+- **30–50:** Quick functional testing.
+- **100–300:** Preliminary optimization experiments.
+- **500–1,000:** Recommended starting range for more serious benchmarking.
+- **2,000–5,000:** Extensive search when computational resources permit.
+
+**When to increase it**
+Increase iterations when the algorithm needs more opportunities to explore the search space or when the solution is still improving.
+
+**Computational trade-off**
+More iterations increase execution time and do not guarantee a globally optimal solution.
+""",
 }
 
 
@@ -35,10 +125,13 @@ def available_datasets() -> list[str]:
     )
 
 
-def city_options(dataset: str) -> list[str]:
-    """Load city IDs only for the currently selected preview dataset."""
+def city_options(dataset: str) -> dict[str, str]:
+    """Load city IDs and names for the currently selected preview dataset."""
     graph = load_graph(DATASETS_ROOT / dataset)
-    return sorted(str(node) for node in graph.nodes)
+    return {
+        str(node): str(graph.nodes[node]["city_name"])
+        for node in sorted(graph.nodes)
+    }
 
 
 def _algorithm_kwargs(population_size: int, generations: int, iterations: int) -> dict[str, dict[str, int]]:
@@ -159,6 +252,76 @@ def _show_charts(result: ExperimentResult) -> None:
         st.caption("Dijkstra and A* are single-pass searches and therefore have no convergence series.")
 
 
+def _show_route_visualization(
+    result: ExperimentResult,
+    source: str,
+    destination: str,
+    route_context: tuple[object, ...],
+) -> None:
+    st.subheader("Route Visualization")
+    selected_algorithm = st.selectbox(
+        "Algorithm",
+        tuple(ALGORITHM_LABELS),
+        format_func=ALGORITHM_LABELS.__getitem__,
+        key="route_map_algorithm_selector",
+    )
+    if st.button("View Route on Map"):
+        st.session_state.pop("route_map_record", None)
+        st.session_state.pop("route_map_experiment_id", None)
+        try:
+            record = next(
+                record
+                for record in result.records
+                if record.get("algorithm") == selected_algorithm
+                and record.get("valid")
+                and record.get("source") == source
+                and record.get("destination") == destination
+            )
+        except StopIteration:
+            st.warning(
+                f"No valid {ALGORITHM_LABELS[selected_algorithm]} route is available "
+                "for the current experiment."
+            )
+        else:
+            st.session_state["route_map_record"] = record
+            st.session_state["route_map_context"] = route_context
+            st.session_state["route_map_algorithm"] = selected_algorithm
+            st.session_state["route_map_experiment_id"] = result.experiment_id
+
+    record = st.session_state.get("route_map_record")
+    if (
+        not isinstance(record, dict)
+        or st.session_state.get("route_map_context") != route_context
+        or st.session_state.get("route_map_algorithm") != selected_algorithm
+        or record.get("algorithm") != selected_algorithm
+        or st.session_state.get("route_map_experiment_id") != result.experiment_id
+    ):
+        return
+
+    dataset = record.get("dataset")
+    if not isinstance(dataset, str):
+        st.error("The selected route does not identify a dataset.")
+        return
+    try:
+        graph = load_graph(DATASETS_ROOT / dataset)
+        route_data = prepare_route_map_data(
+            graph,
+            record["nodes"],
+            record["edge_ids"],
+            record["modes"],
+        )
+        route_map = create_route_map(route_data)
+    except (KeyError, TypeError, RouteMapError, ValueError) as exc:
+        st.error(f"Unable to display the selected route: {exc}")
+        return
+
+    st.caption(
+        f"Showing {ALGORITHM_LABELS[selected_algorithm]} for dataset {dataset} "
+        f"and {OBJECTIVE_LABELS.get(str(record.get('objective')), record.get('objective'))}."
+    )
+    st_folium(route_map, height=600, use_container_width=True, returned_objects=[])
+
+
 def _show_history() -> None:
     st.subheader("Experiment history")
     history = sorted(RESULTS_ROOT.glob("*.json"), reverse=True) if RESULTS_ROOT.is_dir() else []
@@ -210,21 +373,71 @@ def main() -> None:
             default=["cost"],
             format_func=lambda objective: OBJECTIVE_LABELS[objective],
         )
-        repeats = st.number_input("Measured repetitions", min_value=1, max_value=20, value=1)
-        population_size = st.number_input("NSGA-II population", min_value=2, max_value=500, value=10)
-        generations = st.number_input("NSGA-II generations", min_value=1, max_value=500, value=3)
-        iterations = st.number_input("Simulated Annealing iterations", min_value=1, max_value=5000, value=30)
+        repeats = st.number_input(
+            "Measured repetitions",
+            min_value=1,
+            max_value=20,
+            value=1,
+            help=PARAMETER_HELP["repeats"],
+        )
+        population_size = st.number_input(
+            "NSGA-II population",
+            min_value=2,
+            max_value=500,
+            value=10,
+            help=PARAMETER_HELP["population"],
+        )
+        generations = st.number_input(
+            "NSGA-II generations",
+            min_value=1,
+            max_value=500,
+            value=3,
+            help=PARAMETER_HELP["generations"],
+        )
+        iterations = st.number_input(
+            "Simulated Annealing iterations",
+            min_value=1,
+            max_value=5000,
+            value=30,
+            help=PARAMETER_HELP["iterations"],
+        )
 
     if not selected_datasets:
         st.warning("Select at least one dataset.")
         return
-    cities = city_options(selected_datasets[0])
-    source = st.selectbox("Source city", cities, index=0)
+    city_labels = city_options(selected_datasets[0])
+    cities = list(city_labels)
+    source = st.selectbox(
+        "Source city",
+        cities,
+        index=0,
+        format_func=city_labels.__getitem__,
+    )
     destination_options = [city for city in cities if city != source]
-    destination = st.selectbox("Destination city", destination_options, index=0)
+    destination = st.selectbox(
+        "Destination city",
+        destination_options,
+        index=0,
+        format_func=city_labels.__getitem__,
+    )
+    route_context = (
+        tuple(selected_datasets),
+        tuple(selected_objectives),
+        source,
+        destination,
+    )
+    if st.session_state.get("route_map_context") not in (None, route_context):
+        st.session_state.pop("route_map_record", None)
+        st.session_state.pop("route_map_context", None)
+        st.session_state.pop("route_map_algorithm", None)
+        st.session_state.pop("route_map_experiment_id", None)
 
     run_clicked = st.button("Run Experiment", type="primary", disabled=not selected_objectives)
     if run_clicked:
+        st.session_state.pop("route_map_record", None)
+        st.session_state.pop("route_map_context", None)
+        st.session_state.pop("route_map_algorithm", None)
+        st.session_state.pop("route_map_experiment_id", None)
         manager = ExperimentManager(DATASETS_ROOT, RESULTS_ROOT)
         try:
             with st.status("Running selected experiments...", expanded=True) as status:
@@ -255,6 +468,7 @@ def main() -> None:
         st.subheader(f"Experiment {result.experiment_id}")
         st.dataframe(_format_comparison(result.comparison), use_container_width=True, hide_index=True)
         _show_routes(result)
+        _show_route_visualization(result, source, destination, route_context)
         _show_charts(result)
         st.download_button(
             "Download CSV results",

@@ -1,0 +1,195 @@
+{
+  "experiment_id": "experiment-20261101T160945Z-dc80318f",
+  "created_at": "2026-11-01T16:09:45.817080+00:00",
+  "configuration": {
+    "datasets": [
+      "dataset_10"
+    ],
+    "objectives": [
+      "cost"
+    ],
+    "source": "C01",
+    "destination": "C09",
+    "repeats": 1
+  },
+  "combination_count": 1,
+  "algorithm_execution_count": 4,
+  "records": [
+    {
+      "algorithm": "dijkstra",
+      "objective": "cost",
+      "run": 1,
+      "source": "C01",
+      "destination": "C09",
+      "valid": true,
+      "cost": 1253.93,
+      "time": 13.2,
+      "emissions": 59.4,
+      "objective_value": 1253.93,
+      "optimality_gap": 0.0,
+      "execution_time_ms": 0.8469000022159889,
+      "peak_memory_bytes": 2184,
+      "nodes_explored": null,
+      "function_evaluations": null,
+      "convergence": [],
+      "nodes": [
+        "C01",
+        "C02",
+        "C06",
+        "C09"
+      ],
+      "edge_ids": [
+        "C01_C02_rail",
+        "C02_C06_rail",
+        "C06_C09_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_10"
+    },
+    {
+      "algorithm": "astar",
+      "objective": "cost",
+      "run": 1,
+      "source": "C01",
+      "destination": "C09",
+      "valid": true,
+      "cost": 1253.93,
+      "time": 13.2,
+      "emissions": 59.4,
+      "objective_value": 1253.93,
+      "optimality_gap": 0.0,
+      "execution_time_ms": 0.6747000006726012,
+      "peak_memory_bytes": 1576,
+      "nodes_explored": null,
+      "function_evaluations": null,
+      "convergence": [],
+      "nodes": [
+        "C01",
+        "C02",
+        "C06",
+        "C09"
+      ],
+      "edge_ids": [
+        "C01_C02_rail",
+        "C02_C06_rail",
+        "C06_C09_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_10"
+    },
+    {
+      "algorithm": "nsga2",
+      "objective": "cost",
+      "run": 1,
+      "source": "C01",
+      "destination": "C09",
+      "valid": true,
+      "cost": 1576.47,
+      "time": 16.669999999999998,
+      "emissions": 128.1,
+      "objective_value": 1576.47,
+      "optimality_gap": 0.25722328997631444,
+      "execution_time_ms": 219.07770000689197,
+      "peak_memory_bytes": 334598,
+      "nodes_explored": null,
+      "function_evaluations": 30,
+      "convergence": [
+        1576.47,
+        1576.47,
+        1576.47
+      ],
+      "nodes": [
+        "C01",
+        "C04",
+        "C06",
+        "C09"
+      ],
+      "edge_ids": [
+        "C01_C04_rail",
+        "C04_C06_road",
+        "C06_C09_rail"
+      ],
+      "modes": [
+        "rail",
+        "road",
+        "rail"
+      ],
+      "dataset": "dataset_10"
+    },
+    {
+      "algorithm": "simulated_annealing",
+      "objective": "cost",
+      "run": 1,
+      "source": "C01",
+      "destination": "C09",
+      "valid": true,
+      "cost": 1253.93,
+      "time": 13.2,
+      "emissions": 59.4,
+      "objective_value": 1253.93,
+      "optimality_gap": 0.0,
+      "execution_time_ms": 47.718899993924424,
+      "peak_memory_bytes": 7024,
+      "nodes_explored": null,
+      "function_evaluations": 31,
+      "convergence": [
+        1576.47,
+        1253.93,
+        1253.93,
+        1253.93,
+        1253.93,
+        1253.93,
+        1253.93,
+        1253.93,
+        1253.93,
+        1253.93,
+        1253.93,
+        1253.93,
+        1253.93,
+        1253.93,
+        1253.93,
+        1253.93,
+        1253.93,
+        1253.93,
+        1253.93,
+        1253.93,
+        1253.93,
+        1253.93,
+        1253.93,
+        1253.93,
+        1253.93,
+        1253.93,
+        1253.93,
+        1253.93,
+        1253.93,
+        1253.93,
+        1253.93
+      ],
+      "nodes": [
+        "C01",
+        "C02",
+        "C06",
+        "C09"
+      ],
+      "edge_ids": [
+        "C01_C02_rail",
+        "C02_C06_rail",
+        "C06_C09_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_10"
+    }
+  ]
+}

@@ -20,6 +20,7 @@ The application will compare Dijkstra's Algorithm, A* Search, NSGA-II and Simula
 - **Data processing:** Pandas and NumPy
 - **Evolutionary optimization:** pymoo (NSGA-II)
 - **Visualization:** Plotly
+- **Route map visualization:** Folium, Streamlit-Folium and OpenStreetMap tiles
 - **Testing:** pytest
 - **Memory benchmarking:** psutil and/or tracemalloc
 - **Initial result storage:** CSV and JSON
@@ -159,6 +160,8 @@ For `d` selected datasets and `o` selected objectives, the execution manager mus
 
 **Objective:** Build the user-facing Streamlit application around the completed backend pipeline.
 
+**Status:** Complete, including the validated interactive schematic India route map.
+
 **Tasks:**
 
 - Create an experiment setup interface.
@@ -171,6 +174,46 @@ For `d` selected datasets and `o` selected objectives, the execution manager mus
 - Present cost, time and emissions for every algorithm.
 - Provide comparative tables and Plotly visualizations.
 - Add an experiment history view for saved experiments.
+- Add an interactive India route map for one selected algorithm at a time.
+
+#### Interactive India Route Map
+
+**Objective:** Show the selected algorithm's optimized multimodal route on an
+interactive map using the city coordinates already stored in the selected
+dataset.
+
+**Scope and workflow:**
+
+- After an experiment completes, select Dijkstra, A*, NSGA-II or Simulated
+  Annealing in the Route Visualization section.
+- Select **View Route on Map** to render that algorithm's existing result; no
+  optimization is executed again.
+- Resolve each route leg using its preserved NetworkX `MultiDiGraph` edge key,
+  transport mode and edge attributes, so parallel transport edges are not
+  replaced by an arbitrary connection.
+- Display source, destination and intermediate city markers, connection
+  popups, a legend and automatically fitted route bounds.
+- Use Folium with Streamlit-Folium and OpenStreetMap tiles.
+- Keep the map legend readable with explicit high-contrast black text, a white
+  background, grey border and spacing that separates marker and line entries.
+
+Transport modes use these map conventions:
+
+| Mode | Colour | Line style |
+|---|---|---|
+| Road | Blue | Solid |
+| Rail | Red | Dashed |
+| Air | Purple | Dotted |
+| Waterways | Green | Dash-dot |
+
+The map displays one selected algorithm's route at a time. Connections are
+schematic straight city-to-city lines based on dataset coordinates; they are
+not actual road routes, railway tracks, flight paths or navigable waterways.
+
+The experiment setup also provides detailed Markdown help on the four numeric
+parameters. Each native Streamlit information tooltip explains what the
+parameter controls, why it matters, recommended quick-test and benchmarking
+values, when a higher value is useful, and its computational trade-off.
 
 **Expected deliverable:** A functional interactive dashboard connected to the experiment manager.
 
@@ -204,7 +247,8 @@ The classical implementation is complete when:
 3. All four algorithms optimize cost, time and emissions independently through a common interface.
 4. Routes are validated and benchmarked using measured execution and memory data.
 5. The experiment manager executes only explicitly selected dataset-objective combinations.
-6. Streamlit supports configuration, execution, visualization and experiment history.
+6. Streamlit supports configuration, execution, result comparison, experiment
+   history and one-algorithm-at-a-time schematic route-map visualization.
 7. Automated tests and end-to-end demonstrations pass across the supported datasets and objectives.
 8. Documentation and stored results describe actual executions only; no experimental metrics are invented.
 
