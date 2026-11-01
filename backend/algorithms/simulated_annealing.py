@@ -42,6 +42,7 @@ def simulated_annealing(
         raise ValueError(f"No route from {source} to {destination}") from exc
     best = current[:]
     best_value = current_value
+    convergence = [best_value]
     temperature = initial_temperature
     accepted = 0
     for _ in range(iterations):
@@ -62,6 +63,7 @@ def simulated_annealing(
             accepted += 1
         if current_value < best_value:
             best, best_value = current[:], current_value
+        convergence.append(best_value)
         temperature *= cooling_rate
     return result_from_route(
         "simulated_annealing",
@@ -71,5 +73,10 @@ def simulated_annealing(
         graph,
         route_from_waypoints(graph, best, selected_objective)[0],
         iterations=iterations,
-        metadata={"seed": seed, "accepted_moves": accepted},
+        metadata={
+            "seed": seed,
+            "accepted_moves": accepted,
+            "function_evaluations": iterations + 1,
+            "convergence": convergence,
+        },
     )

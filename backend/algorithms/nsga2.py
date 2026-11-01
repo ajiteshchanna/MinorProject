@@ -78,12 +78,21 @@ def nsga2_optimize(
         NSGA2(pop_size=population_size),
         termination=("n_gen", generations),
         seed=seed,
+        save_history=True,
         verbose=False,
     )
     chromosome = np.atleast_1d(result.X[0] if np.ndim(result.X) > 1 else result.X)
     selected = [waypoints[int(index)] for index in chromosome]
     route_nodes, _, _, _ = route_from_waypoints(
         graph, [source] + selected + [destination], selected_objective
+    )
+    convergence = tuple(
+        float(np.min(np.asarray(history.opt.get("F"))))
+        for history in result.history
+    )
+    evaluator = getattr(getattr(result, "algorithm", None), "evaluator", None)
+    function_evaluations = int(
+        getattr(evaluator, "n_eval", population_size * generations)
     )
     return result_from_route(
         "nsga2",
@@ -93,5 +102,11 @@ def nsga2_optimize(
         graph,
         route_nodes,
         iterations=generations,
-        metadata={"seed": seed, "population_size": population_size, "waypoint_count": waypoint_count},
+        metadata={
+            "seed": seed,
+            "population_size": population_size,
+            "waypoint_count": waypoint_count,
+            "function_evaluations": function_evaluations,
+            "convergence": convergence,
+        },
     )
