@@ -1,0 +1,11 @@
+city_id,city_name,country,latitude,longitude,coordinate_source,waterway_corridor
+C01,Ahmedabad,India,23.0225,72.5714,manually_curated_reference,
+C02,Amritsar,India,31.634,74.8723,manually_curated_reference,
+C03,Bengaluru,India,12.9716,77.5946,manually_curated_reference,
+C04,Bhopal,India,23.2599,77.4126,manually_curated_reference,
+C05,Bhubaneswar,India,20.2961,85.8245,manually_curated_reference,east_coast
+C06,Chandigarh,India,30.7333,76.7794,manually_curated_reference,
+C07,Chennai,India,13.0827,80.2707,manually_curated_reference,east_coast
+C08,Coimbatore,India,11.0168,76.9558,manually_curated_reference,
+C09,Dehradun,India,30.3165,78.0322,manually_curated_reference,
+C10,Delhi,India,28.6139,77.209,manually_curated_reference,

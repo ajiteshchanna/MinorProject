@@ -1,0 +1,14 @@
+{
+  "dataset_name": "dataset_60",
+  "city_count": 60,
+  "coordinate_source": "manually_curated_reference",
+  "transport_attribute_source": "simulated_for_development",
+  "waterway_policy": "Only explicitly documented coastal corridors are included.",
+  "waterway_corridors": [
+    "C05-C23",
+    "C07-C52",
+    "C22-C28",
+    "C23-C52",
+    "C30-C44"
+  ]
+}

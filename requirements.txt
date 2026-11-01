@@ -1,0 +1,6 @@
+pandas>=2.0,<3.0
+numpy>=1.24,<3.0
+networkx>=3.0,<4.0
+plotly>=5.0,<7.0
+pymoo>=0.6,<0.7
+pytest>=7.0,<9.0
