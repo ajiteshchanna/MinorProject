@@ -227,8 +227,9 @@ The dashboard in [`app/main.py`](app/main.py) provides:
 - Progress and completion status
 - Optimized route and transport-mode tables
 - Plotly comparison, performance and convergence charts
+- Informational popovers beside comparison graph titles
 - CSV result download
-- Saved experiment history
+- Saved experiment history with readable names and stable unique IDs
 - Route visualization for one selected algorithm at a time
 
 Experiments are not executed automatically when a control changes.
@@ -490,10 +491,13 @@ Persisted experiments are written to `experiments/results/` as:
 
 - `<experiment_id>.csv`: flat measured rows and aggregate comparison columns.
 - `<experiment_id>.json`: experiment configuration, execution counts and
-  serialized route records.
+  serialized route records, including the optional human-readable
+  `experiment_name`.
 
 Records retain dataset, objective, algorithm, source, destination, route nodes,
 exact edge IDs, modes, metrics, measurements and algorithm metadata.
+The unique experiment ID remains the CSV/JSON filename identity; the
+human-readable name is a separate display label.
 
 ## Data and Reproducibility Notes
 

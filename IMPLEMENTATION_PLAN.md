@@ -174,6 +174,9 @@ For `d` selected datasets and `o` selected objectives, the execution manager mus
 - Present cost, time and emissions for every algorithm.
 - Provide comparative tables and Plotly visualizations.
 - Add an experiment history view for saved experiments.
+- Show a human-readable experiment name separately from the unique persisted
+  experiment ID, while retaining backward compatibility with older JSON
+  records.
 - Add an interactive India route map for one selected algorithm at a time.
 
 #### Interactive India Route Map
@@ -214,6 +217,12 @@ The experiment setup also provides detailed Markdown help on the four numeric
 parameters. Each native Streamlit information tooltip explains what the
 parameter controls, why it matters, recommended quick-test and benchmarking
 values, when a higher value is useful, and its computational trade-off.
+
+New saved experiments use names such as `Exp_D10_AHM_AMR`, derived from the
+selected dataset size and actual city names. The timestamp/UUID-based
+`experiment_id` remains the stable CSV/JSON filename identity. Existing
+records without an `experiment_name` continue to load and receive a
+dashboard-only fallback label.
 
 **Expected deliverable:** A functional interactive dashboard connected to the experiment manager.
 

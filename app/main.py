@@ -9,7 +9,11 @@ import plotly.express as px
 import streamlit as st
 from streamlit_folium import st_folium
 
-from backend.experiment_manager import ExperimentManager, ExperimentResult
+from backend.experiment_manager import (
+    ExperimentManager,
+    ExperimentResult,
+    experiment_name,
+)
 from backend.graph import load_graph
 from app.components.route_map import (
     RouteMapError,
@@ -183,6 +187,18 @@ def _show_routes(result: ExperimentResult) -> None:
     st.dataframe(pd.DataFrame(route_rows), use_container_width=True, hide_index=True)
 
 
+def _show_chart_heading(title: str, what: str, why: str) -> None:
+    title_column, info_column = st.columns([0.94, 0.06])
+    with title_column:
+        st.markdown(f"#### {title}")
+    with info_column:
+        with st.popover("ⓘ"):
+            st.markdown("**What does this graph show?**")
+            st.write(what)
+            st.markdown("**Why does it matter?**")
+            st.write(why)
+
+
 def _show_charts(result: ExperimentResult) -> None:
     table = result.comparison
     st.subheader("Comparisons")
@@ -195,6 +211,14 @@ def _show_charts(result: ExperimentResult) -> None:
         )
     )
     chart_data["objective"] = chart_data["objective"].map(OBJECTIVE_LABELS)
+    _show_chart_heading(
+        "Mean Objective Value",
+        "This graph compares the average objective values achieved by different "
+        "optimization algorithms across the selected experiment.",
+        "Since the objectives are minimization problems, a lower objective value "
+        "indicates a better solution. It helps compare solution quality for "
+        "transportation cost, travel time or carbon emissions.",
+    )
     st.plotly_chart(
         px.bar(
             chart_data,
@@ -208,6 +232,14 @@ def _show_charts(result: ExperimentResult) -> None:
         use_container_width=True,
     )
     st.caption("Objective values use the selected objective's native units.")
+    _show_chart_heading(
+        "Mean Execution Time versus Peak Memory",
+        "This graph compares the computational resources required by different "
+        "optimization algorithms. It displays execution time against peak memory "
+        "consumption.",
+        "It helps identify which algorithms execute faster, use less memory and "
+        "have different resource requirements as transportation networks grow.",
+    )
     st.plotly_chart(
         px.scatter(
             chart_data,
@@ -235,6 +267,14 @@ def _show_charts(result: ExperimentResult) -> None:
                 }
             )
     if convergence_rows:
+        _show_chart_heading(
+            "Best-so-far Convergence",
+            "This graph illustrates how the best objective value discovered by an "
+            "optimization algorithm changes during its search process.",
+            "It shows how quickly an algorithm improves, whether progress slows "
+            "down and whether further improvement becomes limited. This is "
+            "particularly useful for NSGA-II and Simulated Annealing.",
+        )
         st.plotly_chart(
             px.line(
                 pd.DataFrame(convergence_rows),
@@ -328,7 +368,11 @@ def _show_history() -> None:
     if not history:
         st.info("No saved experiments yet.")
         return
-    selected = st.selectbox("Saved experiment", history, format_func=lambda path: path.stem)
+    selected = st.selectbox(
+        "Saved experiment",
+        history,
+        format_func=_history_label,
+    )
     try:
         payload = json.loads(selected.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as exc:
@@ -337,12 +381,44 @@ def _show_history() -> None:
     st.json(
         {
             "experiment_id": payload.get("experiment_id"),
+            "experiment_name": payload.get("experiment_name")
+            or _fallback_history_label(payload),
             "created_at": payload.get("created_at"),
             "configuration": payload.get("configuration"),
             "combination_count": payload.get("combination_count"),
             "algorithm_execution_count": payload.get("algorithm_execution_count"),
         }
     )
+
+
+def _fallback_history_label(payload: dict[str, object]) -> str:
+    configuration = payload.get("configuration")
+    if not isinstance(configuration, dict):
+        return str(payload.get("experiment_id", "Saved experiment"))
+    datasets = configuration.get("datasets")
+    source = configuration.get("source")
+    destination = configuration.get("destination")
+    if (
+        not isinstance(datasets, list)
+        or not datasets
+        or not all(isinstance(dataset, str) for dataset in datasets)
+        or not isinstance(source, str)
+        or not isinstance(destination, str)
+    ):
+        return str(payload.get("experiment_id", "Saved experiment"))
+    try:
+        return experiment_name(DATASETS_ROOT, datasets, source, destination)
+    except (OSError, KeyError, TypeError, ValueError):
+        return str(payload.get("experiment_id", "Saved experiment"))
+
+
+def _history_label(path: Path) -> str:
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return path.stem
+    saved_name = payload.get("experiment_name")
+    return saved_name if isinstance(saved_name, str) and saved_name else _fallback_history_label(payload)
 
 
 def main() -> None:

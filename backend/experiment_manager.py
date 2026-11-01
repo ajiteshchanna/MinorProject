@@ -38,6 +38,7 @@ class ExperimentResult:
     config: ExperimentConfig
     records: tuple[dict[str, object], ...]
     comparison: pd.DataFrame
+    experiment_name: str | None = None
     csv_path: Path | None = None
     json_path: Path | None = None
 
@@ -107,6 +108,13 @@ class ExperimentManager:
             config=config,
             records=tuple(records),
             comparison=_comparison_with_context(records),
+            experiment_name=_new_experiment_name(
+                self.datasets_root,
+                config.datasets,
+                config.source,
+                config.destination,
+                self.results_root,
+            ),
         )
         return self.save(result) if persist else result
 
@@ -124,6 +132,7 @@ class ExperimentManager:
         table.to_csv(csv_path, index=False)
         payload = {
             "experiment_id": result.experiment_id,
+            "experiment_name": result.experiment_name,
             "created_at": datetime.now(timezone.utc).isoformat(),
             "configuration": {
                 "datasets": list(result.config.datasets),
@@ -142,6 +151,7 @@ class ExperimentManager:
             result.config,
             result.records,
             result.comparison,
+            result.experiment_name,
             csv_path,
             json_path,
         )
@@ -257,3 +267,72 @@ def _jsonable_record(record: Mapping[str, object]) -> dict[str, object]:
 def _new_experiment_id() -> str:
     timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     return f"experiment-{timestamp}-{uuid4().hex[:8]}"
+
+
+def _city_abbreviation(city_name: str) -> str:
+    """Create a short readable abbreviation from a dataset city name."""
+    letters = "".join(character for character in city_name.upper() if character.isalpha())
+    return (letters[:3] or "CITY").upper()
+
+
+def _distinct_city_abbreviations(source_name: str, destination_name: str) -> tuple[str, str]:
+    source_letters = "".join(character for character in source_name.upper() if character.isalpha())
+    destination_letters = "".join(
+        character for character in destination_name.upper() if character.isalpha()
+    )
+    source_code = _city_abbreviation(source_name)
+    destination_code = _city_abbreviation(destination_name)
+    if source_code != destination_code:
+        return source_code, destination_code
+    for length in range(4, max(len(source_letters), len(destination_letters)) + 1):
+        source_code = source_letters[:length] or "CITY"
+        destination_code = destination_letters[:length] or "CITY"
+        if source_code != destination_code:
+            return source_code, destination_code
+    return f"{source_code}_1", f"{destination_code}_2"
+
+
+def experiment_name(
+    datasets_root: Path,
+    datasets: Iterable[str],
+    source: str,
+    destination: str,
+) -> str:
+    """Build the base human-readable name for an experiment configuration."""
+    selected_dataset = next(iter(datasets), None)
+    if selected_dataset is None:
+        raise ValueError("At least one dataset is required to name an experiment")
+    graph = load_graph(Path(datasets_root) / selected_dataset)
+    try:
+        source_name = str(graph.nodes[source]["city_name"])
+        destination_name = str(graph.nodes[destination]["city_name"])
+    except KeyError as exc:
+        raise ValueError(f"Unable to name experiment for unknown city: {exc}") from exc
+    source_code, destination_code = _distinct_city_abbreviations(
+        source_name, destination_name
+    )
+    return f"Exp_D{graph.number_of_nodes()}_{source_code}_{destination_code}"
+
+
+def _new_experiment_name(
+    datasets_root: Path,
+    datasets: Iterable[str],
+    source: str,
+    destination: str,
+    results_root: Path,
+) -> str:
+    base_name = experiment_name(datasets_root, datasets, source, destination)
+    existing_names: set[str] = set()
+    if results_root.is_dir():
+        for path in results_root.glob("*.json"):
+            try:
+                payload = json.loads(path.read_text(encoding="utf-8"))
+            except (OSError, json.JSONDecodeError):
+                continue
+            saved_name = payload.get("experiment_name")
+            if isinstance(saved_name, str):
+                existing_names.add(saved_name)
+    if base_name not in existing_names:
+        return base_name
+    timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M")
+    return f"{base_name}_{timestamp}_{uuid4().hex[:6]}"
