@@ -62,7 +62,7 @@ class BenchmarkRecord:
     time: float
     emissions: float
     objective_value: float
-    optimality_gap: float
+    optimality_gap: float | None
     execution_time_ms: float
     peak_memory_bytes: int
     nodes_explored: int | None
@@ -193,11 +193,11 @@ def reference_solution(
     )
 
 
-def optimality_gap(value: float, reference: float) -> float:
-    """Return the relative gap to a positive reference objective value."""
+def optimality_gap(value: float, reference: float) -> float | None:
+    """Return the percentage gap, or ``None`` when no percentage is defined."""
     if reference <= 0:
-        raise ValueError("Reference objective value must be positive")
-    return max(0.0, (value - reference) / reference)
+        return None
+    return max(0.0, ((value - reference) / reference) * 100.0)
 
 
 def benchmark(

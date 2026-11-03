@@ -228,6 +228,12 @@ The dashboard in [`app/main.py`](app/main.py) provides:
 - Optimized route and transport-mode tables
 - Plotly comparison, performance and convergence charts
 - Informational popovers beside comparison graph titles
+- Per-run standard-deviation error bars, reference optimality-gap comparisons,
+  and a dataset-size performance view using comparable saved records
+- A logarithmic Python-traced memory axis when all displayed values are
+  positive, with a linear fallback for zero or missing values
+- Convergence labels that distinguish NSGA-II generations from Simulated
+  Annealing iterations
 - CSV result download
 - Saved experiment history with readable names and stable unique IDs
 - Route visualization for one selected algorithm at a time

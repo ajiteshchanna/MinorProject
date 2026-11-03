@@ -10,6 +10,14 @@ The classical system will optimize the following objectives independently:
 - Minimum travel time
 - Minimum carbon emissions
 
+The evaluation dashboard reports means and standard deviations from valid
+measured repetitions, compares solutions with the project's objective-specific
+reference shortest path, distinguishes NSGA-II generations from Simulated
+Annealing iterations, and provides cross-dataset performance plots when saved
+experiments use comparable endpoints and settings. These visualizations do
+not claim real-world scalability from dataset size alone; quantum and hybrid
+optimization remain future work.
+
 The application will compare Dijkstra's Algorithm, A* Search, NSGA-II and Simulated Annealing. Cost, time and emissions will remain separate objectives; they will not be combined into a weighted score. Quantum and hybrid optimization are explicitly outside the scope of this roadmap and will be considered only after the classical system is complete.
 
 ## Technology Stack

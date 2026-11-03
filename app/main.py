@@ -9,6 +9,14 @@ import plotly.express as px
 import streamlit as st
 from streamlit_folium import st_folium
 
+from app.comparison import (
+    convergence_rows,
+    memory_axis_type,
+    objective_statistics,
+    optimality_gap_statistics,
+    resource_statistics,
+    scalability_statistics,
+)
 from backend.experiment_manager import (
     ExperimentManager,
     ExperimentResult,
@@ -202,15 +210,13 @@ def _show_chart_heading(title: str, what: str, why: str) -> None:
 def _show_charts(result: ExperimentResult) -> None:
     table = result.comparison
     st.subheader("Comparisons")
-    chart_data = (
-        table.groupby(["dataset", "objective", "algorithm"], as_index=False)
-        .agg(
-            objective_value=("objective_value", "mean"),
-            execution_time_ms=("execution_time_ms", "mean"),
-            peak_memory_bytes=("peak_memory_bytes", "mean"),
-        )
-    )
-    chart_data["objective"] = chart_data["objective"].map(OBJECTIVE_LABELS)
+    objective_data = objective_statistics(table)
+    resource_data = resource_statistics(table)
+    gap_data = optimality_gap_statistics(table)
+    if objective_data.empty:
+        st.info("No valid measured objective values are available for comparison.")
+        return
+    objective_data["objective_label"] = objective_data["objective"].map(OBJECTIVE_LABELS)
     _show_chart_heading(
         "Mean Objective Value",
         "This graph compares the average objective values achieved by different "
@@ -221,17 +227,28 @@ def _show_charts(result: ExperimentResult) -> None:
     )
     st.plotly_chart(
         px.bar(
-            chart_data,
+            objective_data,
             x="algorithm",
-            y="objective_value",
+            y="mean_objective_value",
             color="algorithm",
-            facet_col="objective",
+            error_y="objective_stddev",
+            facet_col="objective_label",
             facet_row="dataset",
+            custom_data=["algorithm", "dataset", "objective", "mean_objective_value",
+                         "objective_stddev", "valid_measured_runs"],
             title="Mean objective value",
+        ).update_traces(
+            hovertemplate=(
+                "Algorithm: %{customdata[0]}<br>Dataset: %{customdata[1]}<br>"
+                "Objective: %{customdata[2]}<br>Mean: %{customdata[3]:.6g}<br>"
+                "Std. dev.: %{customdata[4]:.6g}<br>"
+                "Valid measured runs: %{customdata[5]}<extra></extra>"
+            )
         ),
         use_container_width=True,
     )
-    st.caption("Objective values use the selected objective's native units.")
+    st.caption("Error bars show ±1 standard deviation from valid measured repetitions. "
+               "A single measured run has no reliable variability estimate.")
     _show_chart_heading(
         "Mean Execution Time versus Peak Memory",
         "This graph compares the computational resources required by different "
@@ -242,31 +259,66 @@ def _show_charts(result: ExperimentResult) -> None:
     )
     st.plotly_chart(
         px.scatter(
-            chart_data,
-            x="execution_time_ms",
-            y="peak_memory_bytes",
-            color="algorithm",
-            symbol="objective",
-            hover_data=["dataset"],
+            resource_data.assign(objective_label=lambda frame: frame["objective"].map(OBJECTIVE_LABELS)),
+            x="mean_execution_time_ms",
+            y="mean_peak_memory_bytes",
+            color="algorithm", symbol="objective_label",
+            error_x="execution_time_stddev", error_y="peak_memory_stddev",
+            custom_data=["algorithm", "dataset", "objective", "mean_execution_time_ms",
+                         "execution_time_stddev", "mean_peak_memory_bytes",
+                         "peak_memory_stddev", "measured_runs"],
             title="Mean execution time versus peak memory",
+        ).update_layout(yaxis_title="Python-traced peak memory (bytes)",
+                        yaxis_type=memory_axis_type(table)).update_traces(
+            hovertemplate=(
+                "Algorithm: %{customdata[0]}<br>Dataset: %{customdata[1]}<br>"
+                "Objective: %{customdata[2]}<br>Mean time: %{customdata[3]:.6g} ms"
+                "<br>Time std. dev.: %{customdata[4]:.6g} ms<br>"
+                "Mean memory: %{customdata[5]:.6g} bytes<br>"
+                "Memory std. dev.: %{customdata[6]:.6g} bytes<br>"
+                "Measured runs: %{customdata[7]}<extra></extra>"
+            )
         ),
         use_container_width=True,
     )
-    st.caption("Execution time is milliseconds; memory is peak bytes measured by tracemalloc.")
-    convergence_rows = []
-    for record in result.records:
-        for step, value in enumerate(record["convergence"], start=1):
-            convergence_rows.append(
-                {
-                    "dataset": record["dataset"],
-                    "objective": OBJECTIVE_LABELS[str(record["objective"])],
-                    "algorithm": record["algorithm"],
-                    "run": record["run"],
-                    "step": step,
-                    "best_so_far": value,
-                }
-            )
-    if convergence_rows:
+    if memory_axis_type(table) == "log":
+        st.caption("Memory is displayed on a logarithmic scale to make differences between "
+                   "algorithms with substantially different memory requirements easier to compare.")
+    else:
+        st.caption("Memory uses a linear scale because zero or non-positive measured values "
+                   "are present; values are Python-traced peak memory, not total system RAM.")
+    if not gap_data.empty:
+        gap_data["objective_label"] = gap_data["objective"].map(OBJECTIVE_LABELS)
+        _show_chart_heading(
+            "Optimality Gap Comparison",
+            "It compares each algorithm's solution with the project's reference shortest-path optimum.",
+            "Lower gaps indicate closer solutions; zero means the reference optimum was achieved.",
+        )
+        st.plotly_chart(
+            px.bar(
+                gap_data, x="algorithm", y="mean_optimality_gap", color="algorithm",
+                error_y="optimality_gap_stddev", facet_col="objective_label",
+                facet_row="dataset", custom_data=["algorithm", "dataset", "objective",
+                                                   "mean_objective_value", "mean_optimality_gap",
+                                                   "measured_runs"],
+                title="Optimality Gap Comparison",
+            ).add_hline(y=0, line_dash="dash", line_color="white").update_layout(
+                yaxis_title="Optimality gap (%)"
+            ).update_traces(
+                hovertemplate=(
+                    "Algorithm: %{customdata[0]}<br>Dataset: %{customdata[1]}<br>"
+                    "Objective: %{customdata[2]}<br>Obtained mean: %{customdata[3]:.6g}"
+                    "<br>Gap: %{customdata[4]:.6g}%<br>Measured runs: %{customdata[5]}"
+                    "<extra></extra>"
+                )
+            ),
+            use_container_width=True,
+        )
+        st.caption("Comparison against the project's reference shortest-path optimum, "
+                   "not an absolute real-world transportation optimum.")
+    convergence = convergence_rows(table)
+    if not convergence.empty:
+        convergence["objective_label"] = convergence["objective"].map(OBJECTIVE_LABELS)
         _show_chart_heading(
             "Best-so-far Convergence",
             "This graph illustrates how the best objective value discovered by an "
@@ -277,19 +329,115 @@ def _show_charts(result: ExperimentResult) -> None:
         )
         st.plotly_chart(
             px.line(
-                pd.DataFrame(convergence_rows),
+                convergence,
                 x="step",
                 y="best_so_far",
                 color="algorithm",
-                facet_row="objective",
+                facet_row="objective_label",
                 facet_col="dataset",
                 line_dash="run",
                 markers=True,
+                custom_data=["algorithm", "dataset", "objective", "run", "step",
+                             "step_type", "best_so_far"],
                 title="Best-so-far convergence",
+            ).update_layout(xaxis_title="Generation / Iteration").update_traces(
+                hovertemplate=(
+                    "Algorithm: %{customdata[0]}<br>Dataset: %{customdata[1]}<br>"
+                    "Objective: %{customdata[2]}<br>Run: %{customdata[3]}<br>"
+                    "%{customdata[5]}: %{customdata[4]}<br>"
+                    "Best-so-far: %{customdata[6]:.6g}<extra></extra>"
+                )
             ),
             use_container_width=True,
         )
         st.caption("Dijkstra and A* are single-pass searches and therefore have no convergence series.")
+    _show_scalability(result)
+
+
+def _saved_comparable_tables(result: ExperimentResult) -> list[pd.DataFrame]:
+    """Load current and historical records with the same endpoint policy."""
+    tables = [result.comparison]
+    if not RESULTS_ROOT.is_dir():
+        return tables
+    for path in RESULTS_ROOT.glob("*.json"):
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        configuration = payload.get("configuration")
+        records = payload.get("records")
+        if not isinstance(configuration, dict) or not isinstance(records, list):
+            continue
+        if (
+            configuration.get("source") == result.config.source
+            and configuration.get("destination") == result.config.destination
+            and configuration.get("repeats") == result.config.repeats
+        ):
+            historical = pd.DataFrame(records)
+            if not historical.empty:
+                tables.append(historical)
+    return tables
+
+
+def _show_scalability(result: ExperimentResult) -> None:
+    _show_chart_heading(
+        "Algorithm Performance Across Dataset Sizes",
+        "It displays how a selected performance metric changes as the network grows from 10 to 60 cities.",
+        "It helps understand solution quality and computational requirements on larger networks. "
+        "Comparisons are meaningful only when experiment configurations are sufficiently consistent.",
+    )
+    metric = st.selectbox(
+        "Scalability metric",
+        ("objective", "execution_time", "memory", "optimality_gap"),
+        format_func={
+            "objective": "Mean objective value",
+            "execution_time": "Mean execution time",
+            "memory": "Mean peak memory",
+            "optimality_gap": "Mean optimality gap",
+        }.__getitem__,
+        key="scalability_metric",
+    )
+    objective = st.selectbox(
+        "Scalability objective",
+        OBJECTIVES,
+        format_func=OBJECTIVE_LABELS.__getitem__,
+        key="scalability_objective",
+    )
+    data = scalability_statistics(
+        _saved_comparable_tables(result), objective, metric
+    )
+    if data.empty:
+        st.info("No comparable saved benchmark records are available for this objective. "
+                "Run the same source/destination configuration across multiple dataset sizes.")
+        return
+    fig = px.line(
+        data,
+        x="city_count",
+        y="value",
+        color="algorithm",
+        markers=True,
+        custom_data=["algorithm", "dataset", "measured_runs", "value"],
+        labels={"city_count": "Number of cities", "value": metric},
+        title="Algorithm Performance Across Dataset Sizes",
+    ).update_traces(
+        hovertemplate=(
+            "Algorithm: %{customdata[0]}<br>Dataset: %{customdata[1]}<br>"
+            "Value: %{customdata[3]:.6g}<br>Measured runs: %{customdata[2]}"
+            "<extra></extra>"
+        )
+    )
+    if metric == "execution_time":
+        fig.update_yaxes(title="Mean execution time (ms)")
+    elif metric == "memory":
+        fig.update_yaxes(title="Mean Python-traced peak memory (bytes)")
+    elif metric == "optimality_gap":
+        fig.update_yaxes(title="Mean optimality gap (%)")
+    else:
+        fig.update_yaxes(title=f"Mean {OBJECTIVE_LABELS[objective].lower()} "
+                              "(native dataset units)")
+    st.plotly_chart(fig, use_container_width=True)
+    st.caption("Missing datasets remain missing; six dataset sizes alone do not establish "
+               "scalability.")
 
 
 def _show_route_visualization(

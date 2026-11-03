@@ -39,6 +39,10 @@ progressed through seven phases:
 Subsequent improvements added city-name selectors, parameter guidance,
 comparison-graph popovers, an interactive schematic route map, and
 human-readable experiment names while preserving unique persistence IDs.
+The evaluation dashboard now also provides measured-repetition error bars,
+reference optimality-gap comparisons, safe logarithmic memory visualization,
+algorithm-specific convergence labels, and a comparable cross-dataset
+scalability view.
 
 ## 3. Seven Implementation Phases
 
