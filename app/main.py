@@ -4,16 +4,15 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from typing import Mapping
 import pandas as pd
 import plotly.express as px
 import streamlit as st
 from streamlit_folium import st_folium
 
 from app.comparison import (
-    convergence_rows,
     memory_axis_type,
     objective_statistics,
-    optimality_gap_statistics,
     resource_statistics,
     scalability_statistics,
 )
@@ -24,6 +23,7 @@ from backend.experiment_manager import (
 )
 from backend.graph import load_graph
 from app.components.route_map import (
+    AlternativeRoute,
     RouteMapError,
     create_route_map,
     prepare_route_map_data,
@@ -212,7 +212,6 @@ def _show_charts(result: ExperimentResult) -> None:
     st.subheader("Comparisons")
     objective_data = objective_statistics(table)
     resource_data = resource_statistics(table)
-    gap_data = optimality_gap_statistics(table)
     if objective_data.empty:
         st.info("No valid measured objective values are available for comparison.")
         return
@@ -287,70 +286,6 @@ def _show_charts(result: ExperimentResult) -> None:
     else:
         st.caption("Memory uses a linear scale because zero or non-positive measured values "
                    "are present; values are Python-traced peak memory, not total system RAM.")
-    if not gap_data.empty:
-        gap_data["objective_label"] = gap_data["objective"].map(OBJECTIVE_LABELS)
-        _show_chart_heading(
-            "Optimality Gap Comparison",
-            "It compares each algorithm's solution with the project's reference shortest-path optimum.",
-            "Lower gaps indicate closer solutions; zero means the reference optimum was achieved.",
-        )
-        st.plotly_chart(
-            px.bar(
-                gap_data, x="algorithm", y="mean_optimality_gap", color="algorithm",
-                error_y="optimality_gap_stddev", facet_col="objective_label",
-                facet_row="dataset", custom_data=["algorithm", "dataset", "objective",
-                                                   "mean_objective_value", "mean_optimality_gap",
-                                                   "measured_runs"],
-                title="Optimality Gap Comparison",
-            ).add_hline(y=0, line_dash="dash", line_color="white").update_layout(
-                yaxis_title="Optimality gap (%)"
-            ).update_traces(
-                hovertemplate=(
-                    "Algorithm: %{customdata[0]}<br>Dataset: %{customdata[1]}<br>"
-                    "Objective: %{customdata[2]}<br>Obtained mean: %{customdata[3]:.6g}"
-                    "<br>Gap: %{customdata[4]:.6g}%<br>Measured runs: %{customdata[5]}"
-                    "<extra></extra>"
-                )
-            ),
-            use_container_width=True,
-        )
-        st.caption("Comparison against the project's reference shortest-path optimum, "
-                   "not an absolute real-world transportation optimum.")
-    convergence = convergence_rows(table)
-    if not convergence.empty:
-        convergence["objective_label"] = convergence["objective"].map(OBJECTIVE_LABELS)
-        _show_chart_heading(
-            "Best-so-far Convergence",
-            "This graph illustrates how the best objective value discovered by an "
-            "optimization algorithm changes during its search process.",
-            "It shows how quickly an algorithm improves, whether progress slows "
-            "down and whether further improvement becomes limited. This is "
-            "particularly useful for NSGA-II and Simulated Annealing.",
-        )
-        st.plotly_chart(
-            px.line(
-                convergence,
-                x="step",
-                y="best_so_far",
-                color="algorithm",
-                facet_row="objective_label",
-                facet_col="dataset",
-                line_dash="run",
-                markers=True,
-                custom_data=["algorithm", "dataset", "objective", "run", "step",
-                             "step_type", "best_so_far"],
-                title="Best-so-far convergence",
-            ).update_layout(xaxis_title="Generation / Iteration").update_traces(
-                hovertemplate=(
-                    "Algorithm: %{customdata[0]}<br>Dataset: %{customdata[1]}<br>"
-                    "Objective: %{customdata[2]}<br>Run: %{customdata[3]}<br>"
-                    "%{customdata[5]}: %{customdata[4]}<br>"
-                    "Best-so-far: %{customdata[6]:.6g}<extra></extra>"
-                )
-            ),
-            use_container_width=True,
-        )
-        st.caption("Dijkstra and A* are single-pass searches and therefore have no convergence series.")
     _show_scalability(result)
 
 
@@ -484,6 +419,7 @@ def _show_route_visualization(
     if not isinstance(dataset, str):
         st.error("The selected route does not identify a dataset.")
         return
+    selected_alternative_route_id: str | None = None
     try:
         graph = load_graph(DATASETS_ROOT / dataset)
         route_data = prepare_route_map_data(
@@ -491,11 +427,29 @@ def _show_route_visualization(
             record["nodes"],
             record["edge_ids"],
             record["modes"],
+            objective=str(record.get("objective")),
         )
-        route_map = create_route_map(route_data)
     except (KeyError, TypeError, RouteMapError, ValueError) as exc:
         st.error(f"Unable to display the selected route: {exc}")
         return
+
+    if route_data.alternative_routes:
+        selector_key = (
+            f"route_map_alternative_selector_{dataset}_{source}_{destination}"
+        )
+        selected_alternative_route_id = st.selectbox(
+            "Highlight alternative complete route",
+            ("None",) + tuple(
+                route.route_id for route in route_data.alternative_routes
+            ),
+            key=selector_key,
+        )
+        if selected_alternative_route_id == "None":
+            selected_alternative_route_id = None
+        st.session_state["route_map_selected_alternative_route_id"] = (
+            selected_alternative_route_id
+        )
+    route_map = create_route_map(route_data, selected_alternative_route_id)
 
     metrics = {
         "distance": sum(float(segment.attributes["distance_km"]) for segment in route_data.segments),
@@ -531,6 +485,19 @@ def _show_route_visualization(
         "to inspect its exact connection details."
     )
     st_folium(route_map, height=600, use_container_width=True, returned_objects=[])
+    if selected_alternative_route_id is not None:
+        selected_alternative = next(
+            route
+            for route in route_data.alternative_routes
+            if route.route_id == selected_alternative_route_id
+        )
+        if selected_alternative is not None:
+            _show_alternative_route_details(
+                selected_alternative,
+                route_data.city_names,
+            )
+    else:
+        st.caption("No complete alternative routes are available for this selection.")
     st.markdown("#### Route Breakdown")
     for index, segment in enumerate(route_data.segments, start=1):
         source_name = route_data.city_names[segment.source]
@@ -571,6 +538,188 @@ def _show_route_visualization(
         use_container_width=True,
         hide_index=True,
     )
+
+
+def _show_alternative_route_details(
+    route: AlternativeRoute,
+    city_names: Mapping[str, str],
+) -> None:
+    """Display metrics and exact connections for one complete alternative route."""
+    st.markdown(f"#### {route.route_id} Details")
+    st.caption(" → ".join(city_names[node] for node in route.nodes))
+    metric_columns = st.columns(4)
+    for column, label, value in (
+        (metric_columns[0], "Total cost", route.cost),
+        (metric_columns[1], "Travel time", route.travel_time),
+        (metric_columns[2], "Emissions", route.emissions),
+        (metric_columns[3], "Distance", route.distance),
+    ):
+        column.metric(label, f"{value:,.2f}")
+    st.caption(f"Connections: {len(route.segments)}")
+    st.dataframe(
+        pd.DataFrame(
+            [
+                {
+                    "From": city_names[segment.source],
+                    "To": city_names[segment.destination],
+                    "Mode": segment.mode.title(),
+                    "Connection ID": segment.attributes.get("connection_id", segment.edge_id),
+                    "Edge key": segment.edge_id,
+                    "Distance": float(segment.attributes["distance_km"]),
+                    "Cost": float(segment.attributes["cost"]),
+                    "Travel time": float(segment.attributes["travel_time_hours"]),
+                    "Emissions": float(segment.attributes["carbon_emissions_kg"]),
+                }
+                for segment in route.segments
+            ]
+        ),
+        use_container_width=True,
+        hide_index=True,
+    )
+
+
+def _show_mathematical_formulation() -> None:
+    """Render the educational mathematical formulation without running experiments."""
+    with st.expander(
+        "📐 Mathematical Formulation – Objectives, Constraints & Algorithms",
+        expanded=False,
+    ):
+        st.markdown(
+            "### 1. Graph representation\n"
+            "The transportation network is a directed weighted `MultiDiGraph`:\n"
+        )
+        st.latex(r"G=(V,E)")
+        st.markdown(
+            "- **G** is the transportation graph; **V** is the set of cities and **E** "
+            "is the set of available directed connections.\n"
+            "- **s** and **t** are the source and destination cities. Multiple modes "
+            "between the same cities are preserved as independent parallel edges."
+        )
+        st.latex(r"e=(c_e,t_e,em_e,d_e)")
+        st.caption(
+            "For edge e, these values are cost, travel time, carbon emissions and "
+            "distance. The graph key and connection ID preserve edge identity."
+        )
+
+        st.divider()
+        st.markdown("### 2. Decision variable")
+        st.latex(r"x_e\in\{0,1\}")
+        st.caption(
+            "This is the mathematical path-selection formulation: xₑ = 1 selects "
+            "a connection and xₑ = 0 excludes it. It is not a claim that every "
+            "algorithm internally uses binary variables."
+        )
+
+        st.divider()
+        st.markdown("### 3. Independent objective functions")
+        objective_columns = st.columns(3)
+        objective_cards = (
+            ("Minimum transportation cost", r"\min Z_C=\sum_{e\in E}c_ex_e",
+             "Find a valid route with minimum total cost."),
+            ("Minimum travel time", r"\min Z_T=\sum_{e\in E}t_ex_e",
+             "Find a valid route with minimum total travel time."),
+            ("Minimum carbon emissions", r"\min Z_E=\sum_{e\in E}em_ex_e",
+             "Find a valid route with minimum total emissions."),
+        )
+        for column, (heading, equation, explanation) in zip(objective_columns, objective_cards):
+            with column:
+                st.markdown(f"**{heading}**")
+                st.latex(equation)
+                st.caption(explanation)
+        st.info(
+            "Cost, travel time and carbon emissions are optimized separately. "
+            "No weighted combination of the three objectives is used in the "
+            "current classical implementation."
+        )
+
+        st.divider()
+        st.markdown("### 4. Constraints")
+        constraints = (
+            (r"\sum_{e\in\delta^+(s)}x_e-\sum_{e\in\delta^-(s)}x_e=1",
+             "Source flow: the route leaves the source."),
+            (r"\sum_{e\in\delta^-(t)}x_e-\sum_{e\in\delta^+(t)}x_e=1",
+             "Destination flow: the route enters the destination."),
+            (r"\sum_{e\in\delta^-(v)}x_e=\sum_{e\in\delta^+(v)}x_e",
+             "Intermediate-city conservation for every intermediate city v."),
+            (r"x_e\in\{0,1\}", "Each connection is either selected or not selected."),
+            (r"(u\to v)\in E", "Only existing directed connections may be traversed."),
+            (r"w_e\geq0", "Non-negative weights support Dijkstra and standard A* shortest-path assumptions."),
+        )
+        for equation, explanation in constraints:
+            st.latex(equation)
+            st.caption(explanation)
+        st.markdown(
+            "**Cycle avoidance:** valid alternative routes use simple paths and avoid "
+            "repeated cities. The displayed binary flow equations are a mathematical "
+            "path formulation; flow conservation alone does not eliminate every "
+            "disconnected cycle, so simple-path or connectivity constraints are also needed."
+        )
+
+        st.divider()
+        st.markdown("### 5. Classical algorithms")
+        st.markdown("**Dijkstra**")
+        st.latex(r"d(v)=\min\left(d(v),d(u)+w(u,v)\right)")
+        st.caption(
+            "Finds shortest paths with non-negative weights by maintaining best-known "
+            "source distances and relaxing neighboring edges."
+        )
+        st.markdown("**A* search**")
+        st.latex(r"f(n)=g(n)+h(n)")
+        st.caption(
+            "g(n) is the cost from the source, h(n) estimates the remaining cost, "
+            "and f(n) estimates the total. An admissible heuristic satisfies "
+            r"$h(n)\leq h^*(n)$; a zero heuristic makes A* behave like Dijkstra."
+        )
+        st.markdown("**NSGA-II**")
+        st.latex(r"P=\{P_1,P_2,\ldots,P_N\}")
+        st.caption(
+            "A population of candidate routes is evaluated, selected, crossed over "
+            "and mutated over generations. In this project it is configured as a "
+            "single-objective run:"
+        )
+        st.latex(r"f(P_i)=Z_q(P_i),\qquad q\in\{\mathrm{cost,time,emissions}\}")
+        st.markdown("**Simulated annealing**")
+        st.latex(r"\Delta E=f(S')-f(S)")
+        st.latex(r"P(\mathrm{accept})=\exp(-\Delta E/T)")
+        st.latex(r"T_{k+1}=\alpha T_k")
+        st.caption(
+            "A neighboring candidate may be accepted even when worse; the probability "
+            "decreases as the temperature cools."
+        )
+
+        st.divider()
+        st.markdown("### 6. Experiment parameters")
+        st.markdown(
+            "**Measured repetitions** assess consistency and variation; one warm-up "
+            "execution per algorithm is excluded from measured repetitions."
+        )
+        st.latex(r"\bar{x}=\frac{1}{R}\sum_{i=1}^{R}x_i")
+        st.latex(r"\sigma=\sqrt{\frac{1}{R}\sum_{i=1}^{R}(x_i-\bar{x})^2}")
+        st.markdown(
+            "- **NSGA-II population:** N candidate solutions.\n"
+            "- **NSGA-II generations:** G evolutionary generations. Under full-population "
+            "evaluation, N_eval ≈ N(G + 1), but the recorded evaluator counter is authoritative.\n"
+            "- **Simulated Annealing iterations:** K search iterations; the implementation "
+            "records N_eval = K + 1 including the initial route."
+        )
+
+        st.divider()
+        st.markdown("### 7. Alternative-route reachability")
+        st.latex(r"R_s=\{v:s\to v\text{ is reachable}\}")
+        st.latex(r"R_t=\{v:v\to t\text{ is reachable}\}")
+        st.latex(r"E_{st}=\{(u,v,k)\in E:u\in R_s,\ v\in R_t\}")
+        st.caption(
+            "Eligible connections can participate in at least one directed "
+            "source-to-destination path. The edge key k preserves parallel connections."
+        )
+
+        st.divider()
+        st.markdown("### 8. Complete-path metrics")
+        st.caption("For one complete path P, all totals are calculated from the same edges:")
+        st.latex(r"C(P)=\sum_{e\in P}c_e")
+        st.latex(r"T(P)=\sum_{e\in P}t_e")
+        st.latex(r"EM(P)=\sum_{e\in P}em_e")
+        st.latex(r"D(P)=\sum_{e\in P}d_e")
 
 
 def _show_history() -> None:
@@ -764,6 +913,7 @@ def main() -> None:
             mime="text/csv",
         )
     _show_history()
+    _show_mathematical_formulation()
 
 
 if __name__ == "__main__":
