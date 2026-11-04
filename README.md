@@ -234,6 +234,12 @@ The dashboard in [`app/main.py`](app/main.py) provides:
   positive, with a linear fallback for zero or missing values
 - Convergence labels that distinguish NSGA-II generations from Simulated
   Annealing iterations
+- Route visualization includes an exact-edge optimized-route summary, metric
+  cards, clickable connection popups, an ordered journey breakdown, route
+  statistics, and switching between valid saved algorithm results without
+  rerunning an experiment. The map remains a schematic city-to-city view using
+  dataset coordinates; it does not draw real road, rail, flight or waterway
+  geometries.
 - CSV result download
 - Saved experiment history with readable names and stable unique IDs
 - Route visualization for one selected algorithm at a time

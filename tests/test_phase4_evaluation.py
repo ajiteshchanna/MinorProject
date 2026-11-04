@@ -25,6 +25,7 @@ def test_route_validation_recalculates_all_edge_metrics() -> None:
     assert validation.errors == ()
     assert validation.metrics == recalculate_route_metrics(GRAPH, result)
     assert validation.metrics["cost"] == result.objective_value
+    assert validation.metrics["distance"] > 0
 
 
 def test_benchmark_repeats_stochastic_runs_and_builds_comparison_table() -> None:

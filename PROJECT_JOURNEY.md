@@ -43,6 +43,9 @@ The evaluation dashboard now also provides measured-repetition error bars,
 reference optimality-gap comparisons, safe logarithmic memory visualization,
 algorithm-specific convergence labels, and a comparable cross-dataset
 scalability view.
+The route view additionally summarizes all metrics from the selected exact
+edges, provides an ordered connection timeline and mode statistics, and
+switches among saved algorithm routes without re-execution.
 
 ## 3. Seven Implementation Phases
 

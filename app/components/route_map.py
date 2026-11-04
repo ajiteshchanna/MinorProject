@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from html import escape
 from typing import Mapping, Sequence
 
@@ -51,6 +51,10 @@ class RouteMapData:
     city_coordinates: Mapping[str, tuple[float, float]]
     city_names: Mapping[str, str]
     segments: tuple[RouteSegment, ...]
+    dataset_coordinates: Mapping[str, tuple[float, float]] = field(
+        default_factory=dict
+    )
+    dataset_names: Mapping[str, str] = field(default_factory=dict)
 
 
 def prepare_route_map_data(
@@ -83,6 +87,19 @@ def prepare_route_map_data(
             raise RouteMapError(f"Route city {node!r} has no valid coordinates.") from exc
         names[node] = str(attributes.get("city_name", node))
 
+    dataset_coordinates: dict[str, tuple[float, float]] = {}
+    dataset_names: dict[str, str] = {}
+    for node, attributes in graph.nodes(data=True):
+        city_id = str(node)
+        try:
+            dataset_coordinates[city_id] = (
+                float(attributes["latitude"]),
+                float(attributes["longitude"]),
+            )
+        except (KeyError, TypeError, ValueError) as exc:
+            raise RouteMapError(f"Dataset city {city_id!r} has no valid coordinates.") from exc
+        dataset_names[city_id] = str(attributes.get("city_name", city_id))
+
     segments: list[RouteSegment] = []
     for source, destination, edge_id, mode in zip(
         route_nodes, route_nodes[1:], edge_ids, modes
@@ -106,13 +123,33 @@ def prepare_route_map_data(
             RouteSegment(source, destination, edge_key, str(mode), dict(edge_data))
         )
 
-    return RouteMapData(route_nodes, coordinates, names, tuple(segments))
+    return RouteMapData(
+        route_nodes,
+        coordinates,
+        names,
+        tuple(segments),
+        dataset_coordinates,
+        dataset_names,
+    )
 
 
 def create_route_map(route_data: RouteMapData) -> folium.Map:
     """Create an interactive schematic map from already-resolved route data."""
     route_map = folium.Map(location=INDIA_CENTER, zoom_start=5, tiles="OpenStreetMap")
     bounds = [route_data.city_coordinates[node] for node in route_data.nodes]
+
+    for node, coordinates in route_data.dataset_coordinates.items():
+        if node in route_data.nodes:
+            continue
+        folium.CircleMarker(
+            coordinates,
+            radius=4,
+            color="black",
+            fill=True,
+            fill_color="black",
+            fill_opacity=0.9,
+            tooltip=route_data.dataset_names[node],
+        ).add_to(route_map)
 
     for index, node in enumerate(route_data.nodes):
         if index == 0:

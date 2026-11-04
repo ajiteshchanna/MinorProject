@@ -447,44 +447,38 @@ def _show_route_visualization(
     route_context: tuple[object, ...],
 ) -> None:
     st.subheader("Route Visualization")
+    available_algorithms = tuple(
+        algorithm
+        for algorithm in ALGORITHM_LABELS
+        if any(
+            record.get("algorithm") == algorithm and record.get("valid")
+            for record in result.records
+        )
+    )
+    if not available_algorithms:
+        st.info("No valid algorithm routes are available for this experiment.")
+        return
     selected_algorithm = st.selectbox(
         "Algorithm",
-        tuple(ALGORITHM_LABELS),
+        available_algorithms,
         format_func=ALGORITHM_LABELS.__getitem__,
         key="route_map_algorithm_selector",
     )
-    if st.button("View Route on Map"):
-        st.session_state.pop("route_map_record", None)
-        st.session_state.pop("route_map_experiment_id", None)
-        try:
-            record = next(
-                record
-                for record in result.records
-                if record.get("algorithm") == selected_algorithm
-                and record.get("valid")
-                and record.get("source") == source
-                and record.get("destination") == destination
-            )
-        except StopIteration:
-            st.warning(
-                f"No valid {ALGORITHM_LABELS[selected_algorithm]} route is available "
-                "for the current experiment."
-            )
-        else:
-            st.session_state["route_map_record"] = record
-            st.session_state["route_map_context"] = route_context
-            st.session_state["route_map_algorithm"] = selected_algorithm
-            st.session_state["route_map_experiment_id"] = result.experiment_id
-
-    record = st.session_state.get("route_map_record")
-    if (
-        not isinstance(record, dict)
-        or st.session_state.get("route_map_context") != route_context
-        or st.session_state.get("route_map_algorithm") != selected_algorithm
-        or record.get("algorithm") != selected_algorithm
-        or st.session_state.get("route_map_experiment_id") != result.experiment_id
-    ):
+    records = [
+        record
+        for record in result.records
+        if record.get("algorithm") == selected_algorithm
+        and record.get("valid")
+        and record.get("source") == source
+        and record.get("destination") == destination
+    ]
+    if not records:
+        st.warning(
+            f"No valid {ALGORITHM_LABELS[selected_algorithm]} route is available "
+            "for the selected source and destination."
+        )
         return
+    record = records[0]
 
     dataset = record.get("dataset")
     if not isinstance(dataset, str):
@@ -503,11 +497,80 @@ def _show_route_visualization(
         st.error(f"Unable to display the selected route: {exc}")
         return
 
+    metrics = {
+        "distance": sum(float(segment.attributes["distance_km"]) for segment in route_data.segments),
+        "cost": sum(float(segment.attributes["cost"]) for segment in route_data.segments),
+        "time": sum(float(segment.attributes["travel_time_hours"]) for segment in route_data.segments),
+        "emissions": sum(
+            float(segment.attributes["carbon_emissions_kg"])
+            for segment in route_data.segments
+        ),
+    }
+    objective = str(record.get("objective"))
+    st.markdown("#### Optimized Route Summary")
+    st.caption(
+        f"{route_data.city_names[route_data.nodes[0]]} → "
+        f"{route_data.city_names[route_data.nodes[-1]]} | "
+        f"{ALGORITHM_LABELS[selected_algorithm]} | {dataset} "
+        f"({len(graph.nodes)} cities) | Optimized objective: "
+        f"{OBJECTIVE_LABELS.get(objective, objective)}"
+    )
+    metric_columns = st.columns(4)
+    for column, label, value in (
+        (metric_columns[0], "Total cost (dataset units)", metrics["cost"]),
+        (metric_columns[1], "Travel time (hours)", metrics["time"]),
+        (metric_columns[2], "Emissions (kg)", metrics["emissions"]),
+        (metric_columns[3], "Distance (km)", metrics["distance"]),
+    ):
+        column.metric(label, f"{value:,.2f}")
+
+    st.markdown("#### Interactive India Map")
     st.caption(
         f"Showing {ALGORITHM_LABELS[selected_algorithm]} for dataset {dataset} "
-        f"and {OBJECTIVE_LABELS.get(str(record.get('objective')), record.get('objective'))}."
+        f"and {OBJECTIVE_LABELS.get(objective, objective)}. Click a route segment "
+        "to inspect its exact connection details."
     )
     st_folium(route_map, height=600, use_container_width=True, returned_objects=[])
+    st.markdown("#### Route Breakdown")
+    for index, segment in enumerate(route_data.segments, start=1):
+        source_name = route_data.city_names[segment.source]
+        destination_name = route_data.city_names[segment.destination]
+        with st.container(border=True):
+            st.markdown(
+                f"**{index}. {source_name} → {destination_name}**  \n"
+                f"`{segment.mode.title()}` · Connection `{segment.edge_id}`"
+            )
+            details = st.columns(4)
+            details[0].write(f"Distance: {float(segment.attributes['distance_km']):,.2f} km")
+            details[1].write(f"Cost: {float(segment.attributes['cost']):,.2f}")
+            details[2].write(
+                f"Time: {float(segment.attributes['travel_time_hours']):,.2f} hours"
+            )
+            details[3].write(
+                f"Emissions: {float(segment.attributes['carbon_emissions_kg']):,.2f} kg"
+            )
+    st.markdown("#### Route Statistics")
+    mode_counts: dict[str, int] = {}
+    for segment in route_data.segments:
+        mode = segment.mode.lower()
+        mode_counts[mode] = mode_counts.get(mode, 0) + 1
+    stat_columns = st.columns(4)
+    stat_columns[0].metric("Connections", len(route_data.segments))
+    stat_columns[1].metric("Unique cities", len(set(route_data.nodes)))
+    stat_columns[2].metric("Transport modes", len(mode_counts))
+    stat_columns[3].metric("Total distance", f"{metrics['distance']:,.2f} km")
+    st.write("Connections by transport mode")
+    st.dataframe(
+        pd.DataFrame(
+            [
+                {"Mode": mode.title(), "Connections": mode_counts.get(mode, 0)}
+                for mode in ("road", "rail", "air", "water", "waterway", "waterways")
+                if mode in mode_counts
+            ]
+        ),
+        use_container_width=True,
+        hide_index=True,
+    )
 
 
 def _show_history() -> None:

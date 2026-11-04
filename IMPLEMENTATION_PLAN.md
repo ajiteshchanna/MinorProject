@@ -18,6 +18,13 @@ experiments use comparable endpoints and settings. These visualizations do
 not claim real-world scalability from dataset size alone; quantum and hybrid
 optimization remain future work.
 
+The route visualization is an exact-edge schematic analysis view. It shows
+source and destination context, all-route metrics, an ordered connection
+breakdown with connection IDs, mode counts, and clickable segment details.
+Algorithm switching selects an existing valid record from the current
+experiment and never reruns optimization. The map uses city coordinates and
+does not represent actual road, rail, air, or waterway geometries.
+
 The application will compare Dijkstra's Algorithm, A* Search, NSGA-II and Simulated Annealing. Cost, time and emissions will remain separate objectives; they will not be combined into a weighted score. Quantum and hybrid optimization are explicitly outside the scope of this roadmap and will be considered only after the classical system is complete.
 
 ## Technology Stack

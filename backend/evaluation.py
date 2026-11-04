@@ -126,7 +126,7 @@ def validate_route(
     if len(result.modes) != len(result.edge_ids):
         errors.append("mode count does not match edge count")
 
-    totals = {"cost": 0.0, "time": 0.0, "emissions": 0.0}
+    totals = {"distance": 0.0, "cost": 0.0, "time": 0.0, "emissions": 0.0}
     for source, destination, edge_id, mode in zip(
         result.nodes, result.nodes[1:], result.edge_ids, result.modes
     ):
@@ -136,6 +136,10 @@ def validate_route(
             continue
         if str(edge_data.get("mode")) != mode:
             errors.append(f"mode mismatch for edge {edge_id}")
+        try:
+            totals["distance"] += float(edge_data["distance_km"])
+        except (KeyError, TypeError, ValueError):
+            errors.append(f"edge {edge_id} has invalid distance_km")
         for objective, attribute in OBJECTIVE_ATTRIBUTES.items():
             try:
                 totals[objective] += float(edge_data[attribute])
