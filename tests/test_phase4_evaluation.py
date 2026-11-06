@@ -1,6 +1,8 @@
 from pathlib import Path
 
 import pandas as pd
+import networkx as nx
+import pytest
 
 from backend.evaluation import (
     aggregate_statistics,
@@ -9,6 +11,11 @@ from backend.evaluation import (
     recalculate_route_metrics,
     reference_solution,
     validate_route,
+)
+from backend.algorithms.common import (
+    OptimizationResult,
+    route_from_nodes,
+    route_from_waypoints,
 )
 from backend.graph import load_graph
 
@@ -26,6 +33,42 @@ def test_route_validation_recalculates_all_edge_metrics() -> None:
     assert validation.metrics == recalculate_route_metrics(GRAPH, result)
     assert validation.metrics["cost"] == result.objective_value
     assert validation.metrics["distance"] > 0
+
+
+def test_cyclic_routes_are_rejected_by_construction_and_validation() -> None:
+    graph = nx.MultiDiGraph()
+    for source, destination in (("S", "A"), ("A", "B"), ("B", "A"), ("B", "T")):
+        graph.add_edge(
+            source,
+            destination,
+            key=f"{source}-{destination}",
+            mode="road",
+            distance_km=1,
+            cost=1,
+            travel_time_hours=1,
+            carbon_emissions_kg=1,
+        )
+
+    with pytest.raises(nx.NetworkXNoPath, match="cannot revisit"):
+        route_from_nodes(graph, ("S", "A", "B", "A", "B", "T"), "cost")
+
+    with pytest.raises(nx.NetworkXNoPath, match="Waypoint sequence cannot contain duplicates"):
+        route_from_waypoints(graph, ("S", "A", "A", "T"), "cost")
+
+    result = OptimizationResult(
+        "test",
+        "cost",
+        "S",
+        "T",
+        ("S", "A", "B", "A", "B", "T"),
+        ("S-A", "A-B", "B-A", "A-B", "B-T"),
+        ("road", "road", "road", "road", "road"),
+        5,
+        True,
+    )
+    validation = validate_route(graph, result)
+    assert not validation.valid
+    assert "route revisits a city" in validation.errors
 
 
 def test_benchmark_repeats_stochastic_runs_and_builds_comparison_table() -> None:

@@ -36,7 +36,7 @@ class _WaypointProblem(ElementwiseProblem):
         super().__init__(
             n_var=waypoint_count,
             n_obj=1,
-            n_ieq_constr=0,
+            n_ieq_constr=1,
             xl=0,
             xu=max(0, len(waypoints) - 1),
             vtype=int,
@@ -44,6 +44,11 @@ class _WaypointProblem(ElementwiseProblem):
 
     def _evaluate(self, x: np.ndarray, out: dict[str, np.ndarray], *args: object, **kwargs: object) -> None:
         selected = [self.waypoints[int(index)] for index in x]
+        duplicate_count = len(selected) - len(set(selected))
+        out["G"] = np.array([duplicate_count], dtype=float)
+        if duplicate_count:
+            out["F"] = 1e15
+            return
         nodes = [self.source] + selected + [self.destination]
         try:
             _, _, _, value = route_from_waypoints(self.graph, nodes, self.objective)
@@ -83,9 +88,16 @@ def nsga2_optimize(
     )
     chromosome = np.atleast_1d(result.X[0] if np.ndim(result.X) > 1 else result.X)
     selected = [waypoints[int(index)] for index in chromosome]
-    route_nodes, _, _, _ = route_from_waypoints(
-        graph, [source] + selected + [destination], selected_objective
-    )
+    fallback = False
+    try:
+        route_nodes, _, _, _ = route_from_waypoints(
+            graph, [source] + selected + [destination], selected_objective
+        )
+    except nx.NetworkXNoPath:
+        route_nodes, _, _, _ = route_from_waypoints(
+            graph, [source, destination], selected_objective
+        )
+        fallback = True
     convergence = tuple(
         float(np.min(np.asarray(history.opt.get("F"))))
         for history in result.history
@@ -107,6 +119,7 @@ def nsga2_optimize(
             "population_size": population_size,
             "waypoint_count": waypoint_count,
             "function_evaluations": function_evaluations,
+            "feasible_chromosome": not fallback,
             "convergence": convergence,
         },
     )

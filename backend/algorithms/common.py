@@ -61,6 +61,8 @@ def route_from_nodes(
 ) -> tuple[tuple[str, ...], tuple[str, ...], tuple[str, ...], float]:
     if len(nodes) < 2:
         raise nx.NetworkXNoPath("A route requires a source and destination")
+    if len(set(nodes)) != len(nodes):
+        raise nx.NetworkXNoPath("A route cannot revisit a city")
     edge_ids: list[str] = []
     modes: list[str] = []
     total = 0.0
@@ -80,6 +82,8 @@ def route_from_waypoints(
     """Decode waypoint genes into a feasible route using weighted path segments."""
     if len(waypoints) < 2:
         raise nx.NetworkXNoPath("A route requires a source and destination")
+    if len(set(waypoints)) != len(waypoints):
+        raise nx.NetworkXNoPath("Waypoint sequence cannot contain duplicates")
     attributes = OBJECTIVE_ATTRIBUTES[objective]
     decoded: list[str] = []
     for source, destination in zip(waypoints, waypoints[1:]):
@@ -147,6 +151,7 @@ def optimize(
 ) -> OptimizationResult:
     """Dispatch an algorithm by name using the shared interface."""
     from .astar import astar_search
+    from .ant_colony import ant_colony_optimize
     from .dijkstra import dijkstra_shortest_path
     from .nsga2 import nsga2_optimize
     from .simulated_annealing import simulated_annealing
@@ -156,6 +161,7 @@ def optimize(
         "astar": astar_search,
         "nsga2": nsga2_optimize,
         "simulated_annealing": simulated_annealing,
+        "aco": ant_colony_optimize,
     }
     try:
         selected = algorithms[algorithm]

@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_7f68417b4ca7879e8d370f2cf0470292 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+    <div style="position: fixed; bottom: 30px; left: 30px; z-index: 9999;
+                background: #ffffff; color: #000000; padding: 12px 14px;
+                border: 1px solid #b0b0b0; border-radius: 4px;
+                line-height: 1.6; min-width: 180px;
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);">
+      <div style="color: #000000; font-weight: 700; margin-bottom: 4px;">
+        Route legend
+      </div>
+      <div style="color: #000000;"><span style="color: green;">&#9679;</span> Source</div>
+      <div style="color: #000000;"><span style="color: red;">&#9679;</span> Destination</div>
+      <div style="color: #000000;"><span style="color: blue;">&#9679;</span> Intermediate city</div>
+      <div style="color: #000000; margin-top: 4px;"><span style="color: blue;">&#9473;</span> Road</div>
+      <div style="color: #000000;"><span style="color: red;">- -</span> Rail</div>
+      <div style="color: #000000;"><span style="color: purple;">&#183; &#183;</span> Air</div>
+      <div style="color: #000000;"><span style="color: green;">- &#183; -</span> Waterways</div>
+    </div>
+    
+    
+            <div class="folium-map" id="map_7f68417b4ca7879e8d370f2cf0470292" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_7f68417b4ca7879e8d370f2cf0470292 = L.map(
+                "map_7f68417b4ca7879e8d370f2cf0470292",
+                {
+                    center: [22.5, 79.0],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 5,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_a811b12070f6492ee5fc4ce96cfc64d5 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_a811b12070f6492ee5fc4ce96cfc64d5.addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            var circle_marker_1ec046c4f85494382ab584479f49b705 = L.circleMarker(
+                [31.634, 74.8723],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            circle_marker_1ec046c4f85494382ab584479f49b705.bindTooltip(
+                `<div>
+                     Amritsar
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3f108c9eeef6a49067b69284043c7157 = L.circleMarker(
+                [23.2599, 77.4126],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            circle_marker_3f108c9eeef6a49067b69284043c7157.bindTooltip(
+                `<div>
+                     Bhopal
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c7351d3388807fd94387a069af5b8bed = L.circleMarker(
+                [20.2961, 85.8245],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            circle_marker_c7351d3388807fd94387a069af5b8bed.bindTooltip(
+                `<div>
+                     Bhubaneswar
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_1679b3da66393fa6fadee5c85f326cd5 = L.circleMarker(
+                [30.7333, 76.7794],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            circle_marker_1679b3da66393fa6fadee5c85f326cd5.bindTooltip(
+                `<div>
+                     Chandigarh
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_52f388c6430292d00d846779f923ddcf = L.circleMarker(
+                [13.0827, 80.2707],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            circle_marker_52f388c6430292d00d846779f923ddcf.bindTooltip(
+                `<div>
+                     Chennai
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b689e9e93d4e8a2913b315258d9c2bcb = L.circleMarker(
+                [11.0168, 76.9558],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            circle_marker_b689e9e93d4e8a2913b315258d9c2bcb.bindTooltip(
+                `<div>
+                     Coimbatore
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0e725421b7ee04eb5269a9537e88794d = L.circleMarker(
+                [30.3165, 78.0322],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            circle_marker_0e725421b7ee04eb5269a9537e88794d.bindTooltip(
+                `<div>
+                     Dehradun
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d79061bfc38a072e809d693fe21e5d47 = L.circleMarker(
+                [28.6139, 77.209],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            circle_marker_d79061bfc38a072e809d693fe21e5d47.bindTooltip(
+                `<div>
+                     Delhi
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_1fabccc4e0e94c3d09a5b15823a8119d = L.circleMarker(
+                [26.1445, 91.7362],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            circle_marker_1fabccc4e0e94c3d09a5b15823a8119d.bindTooltip(
+                `<div>
+                     Guwahati
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f22760dd74c458a4201edf234f53fd9f = L.circleMarker(
+                [15.2993, 74.124],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            circle_marker_f22760dd74c458a4201edf234f53fd9f.bindTooltip(
+                `<div>
+                     Goa
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_31f4dd08145e9d5935e84faecc728520 = L.circleMarker(
+                [28.4595, 77.0266],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            circle_marker_31f4dd08145e9d5935e84faecc728520.bindTooltip(
+                `<div>
+                     Gurugram
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_202bb1407cc33f51e01cfb08f7cb97af = L.circleMarker(
+                [26.2183, 78.1828],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            circle_marker_202bb1407cc33f51e01cfb08f7cb97af.bindTooltip(
+                `<div>
+                     Gwalior
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_25a6a9cd586f3619c95abaaa57e5e25b = L.circleMarker(
+                [17.385, 78.4867],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            circle_marker_25a6a9cd586f3619c95abaaa57e5e25b.bindTooltip(
+                `<div>
+                     Hyderabad
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c150fccf26f3c3e1dc1bbf02afdf0842 = L.circleMarker(
+                [22.7196, 75.8577],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            circle_marker_c150fccf26f3c3e1dc1bbf02afdf0842.bindTooltip(
+                `<div>
+                     Indore
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ad276831854b2ef75a529629819f9810 = L.circleMarker(
+                [26.9124, 75.7873],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            circle_marker_ad276831854b2ef75a529629819f9810.bindTooltip(
+                `<div>
+                     Jaipur
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ae224ee6408f0b2b9f35380fe2aeb798 = L.circleMarker(
+                [32.7266, 74.857],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            circle_marker_ae224ee6408f0b2b9f35380fe2aeb798.bindTooltip(
+                `<div>
+                     Jammu
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_5cd29ba6cec25bb7777c751bdc7f63b5 = L.circleMarker(
+                [22.8046, 86.2029],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            circle_marker_5cd29ba6cec25bb7777c751bdc7f63b5.bindTooltip(
+                `<div>
+                     Jamshedpur
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_087f2fcef7e86964d72345090323675f = L.circleMarker(
+                [26.2389, 73.0243],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            circle_marker_087f2fcef7e86964d72345090323675f.bindTooltip(
+                `<div>
+                     Jodhpur
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_00fb0c79f8fa73ec9b64e5d05b3c0019 = L.circleMarker(
+                [26.4499, 80.3319],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            circle_marker_00fb0c79f8fa73ec9b64e5d05b3c0019.bindTooltip(
+                `<div>
+                     Kanpur
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_11f0a1a6bd782d202a5d8984209cb270 = L.circleMarker(
+                [9.9312, 76.2673],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            circle_marker_11f0a1a6bd782d202a5d8984209cb270.bindTooltip(
+                `<div>
+                     Kochi
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_69e82e1f5ae572dc2bad0385360e3f16 = L.circleMarker(
+                [22.5726, 88.3639],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            circle_marker_69e82e1f5ae572dc2bad0385360e3f16.bindTooltip(
+                `<div>
+                     Kolkata
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_7bac2f8bc5439acaead6cf6a2fae4721 = L.circleMarker(
+                [25.2138, 75.8648],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            circle_marker_7bac2f8bc5439acaead6cf6a2fae4721.bindTooltip(
+                `<div>
+                     Kota
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c034dd9afb0d366449924c7b3edd84a9 = L.circleMarker(
+                [26.8467, 80.9462],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            circle_marker_c034dd9afb0d366449924c7b3edd84a9.bindTooltip(
+                `<div>
+                     Lucknow
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9c58de59203000a40f4802ca51ff226a = L.circleMarker(
+                [30.901, 75.8573],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            circle_marker_9c58de59203000a40f4802ca51ff226a.bindTooltip(
+                `<div>
+                     Ludhiana
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_8d1c4b1825287c5bf1791ff938eee23d = L.circleMarker(
+                [9.9252, 78.1198],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            circle_marker_8d1c4b1825287c5bf1791ff938eee23d.bindTooltip(
+                `<div>
+                     Madurai
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e3a8cab5a46ddaf13c66d7ab911acbdf = L.circleMarker(
+                [12.9141, 74.856],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            circle_marker_e3a8cab5a46ddaf13c66d7ab911acbdf.bindTooltip(
+                `<div>
+                     Mangaluru
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_bca65efdcac1607a4a6ce3759877956f = L.circleMarker(
+                [28.9845, 77.7064],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            circle_marker_bca65efdcac1607a4a6ce3759877956f.bindTooltip(
+                `<div>
+                     Meerut
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9d19d05c831612ab79b63c6682c5415a = L.circleMarker(
+                [19.076, 72.8777],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            circle_marker_9d19d05c831612ab79b63c6682c5415a.bindTooltip(
+                `<div>
+                     Mumbai
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2a2b4b08bd2cec3da6a0875949f598f2 = L.circleMarker(
+                [12.2958, 76.6394],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            circle_marker_2a2b4b08bd2cec3da6a0875949f598f2.bindTooltip(
+                `<div>
+                     Mysuru
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_77f191dd9b93cce30fab4028304728af = L.circleMarker(
+                [21.1458, 79.0882],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            circle_marker_77f191dd9b93cce30fab4028304728af.bindTooltip(
+                `<div>
+                     Nagpur
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f4da6934e9d1f038cbc58480eacbd198 = L.circleMarker(
+                [19.9975, 73.7898],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            circle_marker_f4da6934e9d1f038cbc58480eacbd198.bindTooltip(
+                `<div>
+                     Nashik
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_62db85cbfda991b88409433d31c5dbb8 = L.circleMarker(
+                [28.5355, 77.391],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            circle_marker_62db85cbfda991b88409433d31c5dbb8.bindTooltip(
+                `<div>
+                     Noida
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b273174e630aeb6536b2e09dce5e3491 = L.circleMarker(
+                [25.5941, 85.1376],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            circle_marker_b273174e630aeb6536b2e09dce5e3491.bindTooltip(
+                `<div>
+                     Patna
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_96fc8ee76e200192a8c5c88f7af82fce = L.circleMarker(
+                [25.4358, 81.8463],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            circle_marker_96fc8ee76e200192a8c5c88f7af82fce.bindTooltip(
+                `<div>
+                     Prayagraj
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b1300272f5b3c43854753f7bab8cec77 = L.circleMarker(
+                [18.5204, 73.8567],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            circle_marker_b1300272f5b3c43854753f7bab8cec77.bindTooltip(
+                `<div>
+                     Pune
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_55e62469db7e85e39254daee8dc4f1eb = L.circleMarker(
+                [21.2514, 81.6296],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            circle_marker_55e62469db7e85e39254daee8dc4f1eb.bindTooltip(
+                `<div>
+                     Raipur
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_23724af27e1b32c03cb86f97c4124ccf = L.circleMarker(
+                [22.3039, 70.8022],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            circle_marker_23724af27e1b32c03cb86f97c4124ccf.bindTooltip(
+                `<div>
+                     Rajkot
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_16b3542fdc67f32e1c7d28d986b87da1 = L.circleMarker(
+                [23.3441, 85.3096],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            circle_marker_16b3542fdc67f32e1c7d28d986b87da1.bindTooltip(
+                `<div>
+                     Ranchi
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_86bc82a44cce188025620e89372a4612 = L.marker(
+                [23.0225, 72.5714],
+                {
+}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            var icon_66b30d1a58bd5bbbb270e4700feb0286 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_4849a5faf9f077c61c25c9b9d718d913 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_b3e16b2031542bea08547aa32f1f2c07 = $(`<div id="html_b3e16b2031542bea08547aa32f1f2c07" style="width: 100.0%; height: 100.0%;"><b>Source</b><br>City: Ahmedabad<br>City ID: C01</div>`)[0];
+                popup_4849a5faf9f077c61c25c9b9d718d913.setContent(html_b3e16b2031542bea08547aa32f1f2c07);
+            
+        
+
+        marker_86bc82a44cce188025620e89372a4612.bindPopup(popup_4849a5faf9f077c61c25c9b9d718d913)
+        ;
+
+        
+    
+    
+            marker_86bc82a44cce188025620e89372a4612.bindTooltip(
+                `<div>
+                     Source: Ahmedabad
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_86bc82a44cce188025620e89372a4612.setIcon(icon_66b30d1a58bd5bbbb270e4700feb0286);
+            
+    
+            var marker_94654cb383a14f58e76029664f9e72ef = L.marker(
+                [12.9716, 77.5946],
+                {
+}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+            var icon_71271483dfd6828711b875a43a027786 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ab3b96af3623f957fcb7ca0dbc4a444d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_d18c2ad75b56f8f5bf08a2acf26051d6 = $(`<div id="html_d18c2ad75b56f8f5bf08a2acf26051d6" style="width: 100.0%; height: 100.0%;"><b>Destination</b><br>City: Bengaluru<br>City ID: C03</div>`)[0];
+                popup_ab3b96af3623f957fcb7ca0dbc4a444d.setContent(html_d18c2ad75b56f8f5bf08a2acf26051d6);
+            
+        
+
+        marker_94654cb383a14f58e76029664f9e72ef.bindPopup(popup_ab3b96af3623f957fcb7ca0dbc4a444d)
+        ;
+
+        
+    
+    
+            marker_94654cb383a14f58e76029664f9e72ef.bindTooltip(
+                `<div>
+                     Destination: Bengaluru
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_94654cb383a14f58e76029664f9e72ef.setIcon(icon_71271483dfd6828711b875a43a027786);
+            
+    
+            var poly_line_683260dcbddbd01d3f8172da7e2db16f = L.polyline(
+                [[23.0225, 72.5714], [12.9716, 77.5946]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": "10, 10", "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_7f68417b4ca7879e8d370f2cf0470292);
+        
+    
+        var popup_7d999a471b78e0e86d3f1e66a7cf6748 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_ef9c311a3e04793a1080534c5648f4f1 = $(`<div id="html_ef9c311a3e04793a1080534c5648f4f1" style="width: 100.0%; height: 100.0%;"><b>From city:</b> Ahmedabad<br><b>To city:</b> Bengaluru<br><b>Connection ID:</b> C01_C03_rail<br><b>Transport mode:</b> rail<br><b>Distance (km):</b> 1237.04<br><b>Cost:</b> 1175.19<br><b>Travel time (hours):</b> 12.37<br><b>Carbon emissions (kg):</b> 55.67</div>`)[0];
+                popup_7d999a471b78e0e86d3f1e66a7cf6748.setContent(html_ef9c311a3e04793a1080534c5648f4f1);
+            
+        
+
+        poly_line_683260dcbddbd01d3f8172da7e2db16f.bindPopup(popup_7d999a471b78e0e86d3f1e66a7cf6748)
+        ;
+
+        
+    
+    
+            map_7f68417b4ca7879e8d370f2cf0470292.fitBounds(
+                [[23.0225, 72.5714], [12.9716, 77.5946]],
+                {"padding": [20, 20]}
+            );
+        
+</script>
+</html>

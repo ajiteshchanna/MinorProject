@@ -103,3 +103,8 @@ def test_missing_coordinates_and_invalid_routes_raise_clear_errors() -> None:
 
     with pytest.raises(RouteMapError, match="missing"):
         prepare_route_map_data(_graph(), ("C01", "C02"), ("missing",), ("road",))
+
+    with pytest.raises(RouteMapError, match="cannot revisit"):
+        prepare_route_map_data(
+            _graph(), ("C01", "C02", "C01"), ("road-1", "road-1"), ("road", "road")
+        )

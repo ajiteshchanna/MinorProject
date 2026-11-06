@@ -1,9 +1,12 @@
 # Multimodal Transportation Route Optimization using Classical and Quantum Computing
 
+The detailed mathematical and research-style description is available in
+[`RESEARCH_PAPER.md`](RESEARCH_PAPER.md).
+
 This project explores route optimization in a directed multimodal
 transportation network containing road, rail, air and waterways connections.
 The implemented application is a classical optimization system: it compares
-Dijkstra, A* Search, NSGA-II and Simulated Annealing while optimizing one
+Dijkstra, A* Search, NSGA-II, Simulated Annealing and Ant Colony Optimization while optimizing one
 objective at a time:
 
 - Minimum transportation cost
@@ -32,7 +35,7 @@ The project models this problem as a NetworkX `MultiDiGraph`:
 
 The Streamlit dashboard lets a user select datasets, objectives, source and
 destination cities, experiment parameters and algorithm settings. It executes
-the four classical algorithms, validates and benchmarks their routes, compares
+the five classical algorithms, validates and benchmarks their routes, compares
 the results, stores CSV/JSON output, and can display one selected algorithm's
 route on an interactive schematic India map.
 
@@ -60,7 +63,7 @@ not combine cost, time and emissions into a weighted multi-objective score.
 
 - Construct validated multimodal transportation graphs.
 - Preserve parallel transport edges and their exact connection identities.
-- Implement four classical route optimization algorithms.
+- Implement five classical route optimization algorithms.
 - Compare route quality using independently selected objectives.
 - Validate routes and recalculate their metrics from graph edges.
 - Measure execution time and peak memory usage.
@@ -168,7 +171,15 @@ Uses route waypoint perturbations, temperature-based acceptance and cooling.
 The implementation records accepted moves, function evaluations and
 best-so-far convergence values.
 
-All four algorithms return the shared `OptimizationResult` structure:
+#### Ant Colony Optimization
+
+Uses seeded edge-level pheromone trails, objective-based heuristic desirability,
+pheromone evaporation and ant route deposits. Each ant may move only to an
+unvisited city, so ACO constructs cycle-free routes. The implementation records
+pheromone parameters, feasible ant counts, function evaluations and
+best-so-far convergence values.
+
+All five algorithms return the shared `OptimizationResult` structure:
 
 - Ordered route nodes
 - Ordered exact edge IDs
@@ -184,7 +195,7 @@ user selections, loads only selected datasets, executes each selected
 dataset-objective combination, and persists the resulting experiment.
 
 For `d` selected datasets, `o` selected objectives and `r` measured
-repetitions, the manager records `4 × d × o × r` measured algorithm
+repetitions, the manager records `5 × d × o × r` measured algorithm
 executions. Each algorithm also performs one unrecorded warm-up execution per
 dataset-objective combination.
 
@@ -194,6 +205,8 @@ Dashboard parameters include:
 - NSGA-II population
 - NSGA-II generations
 - Simulated Annealing iterations
+- ACO ants
+- ACO iterations
 
 The information icons beside these controls provide recommended quick-test and
 benchmarking ranges without changing the controls' defaults or limits.
@@ -209,7 +222,7 @@ benchmarking ranges without changing the controls' defaults or limits.
 - Objective-optimal reference solutions
 - Relative optimality gaps
 - Mean, median and population standard deviation for timing and memory
-- Convergence histories for NSGA-II and Simulated Annealing
+- Convergence histories for NSGA-II, Simulated Annealing and ACO
 - Function-evaluation counts for iterative algorithms
 
 Dijkstra and A* do not produce iterative convergence histories because they are
@@ -242,7 +255,7 @@ The dashboard in [`app/main.py`](app/main.py) provides:
   geometries.
 - CSV result download
 - Saved experiment history with readable names and stable unique IDs
-- Route visualization for one selected algorithm at a time
+- Route visualization for one selected algorithm at a time, including ACO
 
 Experiments are not executed automatically when a control changes.
 
@@ -250,8 +263,8 @@ Experiments are not executed automatically when a control changes.
 
 [`app/components/route_map.py`](app/components/route_map.py) builds a Folium
 map integrated into Streamlit with `streamlit-folium` and OpenStreetMap tiles.
-After an experiment completes, the user selects Dijkstra, A*, NSGA-II or
-Simulated Annealing and clicks **View Route on Map**.
+After an experiment completes, the user selects Dijkstra, A*, NSGA-II,
+Simulated Annealing or ACO and clicks **View Route on Map**.
 
 The map includes:
 
@@ -326,7 +339,7 @@ attributes, and constructs the `MultiDiGraph`.
 
 ### Optimization layer
 
-`backend/algorithms/` exposes a common dispatcher and the four algorithm
+`backend/algorithms/` exposes a common dispatcher and the five algorithm
 implementations. `backend/algorithms/common.py` contains shared result types
 and route decoding helpers.
 
@@ -362,7 +375,8 @@ MinorProject/
 │   │   ├── dijkstra.py
 │   │   ├── astar.py
 │   │   ├── nsga2.py
-│   │   └── simulated_annealing.py
+│   │   ├── simulated_annealing.py
+│   │   └── ant_colony.py
 │   └── data/
 │       ├── __init__.py
 │       ├── prepare_datasets.py
@@ -411,10 +425,13 @@ Important modules:
 
 ## Installation
 
-From the project root, create or activate a Python environment, then install
-the declared dependencies:
+From PowerShell, open the project directory, create a virtual environment,
+activate it, and install the declared dependencies:
 
 ```powershell
+cd "C:\Users\Risha\OneDrive\Documents\Desktop\Minor Project\MinorProject"
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
 ```
 
@@ -424,19 +441,24 @@ required because no quantum implementation exists in this repository.
 
 ## Running the Dashboard
 
-From the repository root:
+From the activated environment and repository root, start the dashboard:
 
 ```powershell
-streamlit run app/main.py
+python -m streamlit run app/main.py
 ```
 
-If the environment does not automatically include the repository root on
-Python's import path, use this PowerShell form:
+The dashboard opens at `http://localhost:8501`. If PowerShell allows the
+Streamlit executable directly, `streamlit run app/main.py` is equivalent.
+Using `python -m streamlit` avoids launcher and application-control issues on
+some Windows installations. If the environment does not automatically include
+the repository root on Python's import path, use:
 
 ```powershell
 $env:PYTHONPATH = (Get-Location).Path
-streamlit run app/main.py
+python -m streamlit run app/main.py
 ```
+
+Stop the dashboard with `Ctrl+C`.
 
 Then:
 
@@ -463,8 +485,8 @@ Run the Phase 7 integration checkpoint:
 python manual_phase7_checkpoint.py
 ```
 
-The checkpoint exercises all six datasets, three objectives and four
-algorithms with lightweight NSGA-II and Simulated Annealing settings. It
+The checkpoint exercises all six datasets, three objectives and five
+algorithms with lightweight NSGA-II, Simulated Annealing and ACO settings. It
 prints values calculated at runtime and does not create invented metrics.
 
 Additional phase checkpoint scripts are available at the repository root:
@@ -494,8 +516,8 @@ print(result.comparison)
 ```
 
 Set `persist=False` for an in-memory run. Use `algorithm_kwargs` to provide
-algorithm-specific settings such as NSGA-II population/generations or
-Simulated Annealing iterations.
+algorithm-specific settings such as NSGA-II population/generations, Simulated
+Annealing iterations, or ACO ants/iterations.
 
 ## Result Storage
 

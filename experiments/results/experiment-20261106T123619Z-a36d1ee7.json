@@ -1,0 +1,2740 @@
+{
+  "experiment_id": "experiment-20261106T123619Z-a36d1ee7",
+  "experiment_name": "Exp_D60_AHM_COI",
+  "created_at": "2026-11-06T12:36:19.921877+00:00",
+  "configuration": {
+    "datasets": [
+      "dataset_60"
+    ],
+    "objectives": [
+      "cost",
+      "time",
+      "emissions"
+    ],
+    "source": "C01",
+    "destination": "C08",
+    "repeats": 5
+  },
+  "combination_count": 3,
+  "algorithm_execution_count": 60,
+  "records": [
+    {
+      "algorithm": "dijkstra",
+      "objective": "cost",
+      "run": 1,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 1391.98,
+      "time": 14.649999999999999,
+      "emissions": 65.94,
+      "objective_value": 1391.98,
+      "optimality_gap": 0.0,
+      "execution_time_ms": 0.970299995969981,
+      "peak_memory_bytes": 10984,
+      "nodes_explored": null,
+      "function_evaluations": null,
+      "convergence": [],
+      "nodes": [
+        "C01",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "dijkstra",
+      "objective": "cost",
+      "run": 2,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 1391.98,
+      "time": 14.649999999999999,
+      "emissions": 65.94,
+      "objective_value": 1391.98,
+      "optimality_gap": 0.0,
+      "execution_time_ms": 1.034800021443516,
+      "peak_memory_bytes": 11580,
+      "nodes_explored": null,
+      "function_evaluations": null,
+      "convergence": [],
+      "nodes": [
+        "C01",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "dijkstra",
+      "objective": "cost",
+      "run": 3,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 1391.98,
+      "time": 14.649999999999999,
+      "emissions": 65.94,
+      "objective_value": 1391.98,
+      "optimality_gap": 0.0,
+      "execution_time_ms": 1.3835999998264015,
+      "peak_memory_bytes": 10288,
+      "nodes_explored": null,
+      "function_evaluations": null,
+      "convergence": [],
+      "nodes": [
+        "C01",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "dijkstra",
+      "objective": "cost",
+      "run": 4,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 1391.98,
+      "time": 14.649999999999999,
+      "emissions": 65.94,
+      "objective_value": 1391.98,
+      "optimality_gap": 0.0,
+      "execution_time_ms": 1.3218999956734478,
+      "peak_memory_bytes": 10288,
+      "nodes_explored": null,
+      "function_evaluations": null,
+      "convergence": [],
+      "nodes": [
+        "C01",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "dijkstra",
+      "objective": "cost",
+      "run": 5,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 1391.98,
+      "time": 14.649999999999999,
+      "emissions": 65.94,
+      "objective_value": 1391.98,
+      "optimality_gap": 0.0,
+      "execution_time_ms": 1.490800001192838,
+      "peak_memory_bytes": 10288,
+      "nodes_explored": null,
+      "function_evaluations": null,
+      "convergence": [],
+      "nodes": [
+        "C01",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "astar",
+      "objective": "cost",
+      "run": 1,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 1391.98,
+      "time": 14.649999999999999,
+      "emissions": 65.94,
+      "objective_value": 1391.98,
+      "optimality_gap": 0.0,
+      "execution_time_ms": 0.6712999893352389,
+      "peak_memory_bytes": 6216,
+      "nodes_explored": null,
+      "function_evaluations": null,
+      "convergence": [],
+      "nodes": [
+        "C01",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "astar",
+      "objective": "cost",
+      "run": 2,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 1391.98,
+      "time": 14.649999999999999,
+      "emissions": 65.94,
+      "objective_value": 1391.98,
+      "optimality_gap": 0.0,
+      "execution_time_ms": 0.8571000071242452,
+      "peak_memory_bytes": 6392,
+      "nodes_explored": null,
+      "function_evaluations": null,
+      "convergence": [],
+      "nodes": [
+        "C01",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "astar",
+      "objective": "cost",
+      "run": 3,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 1391.98,
+      "time": 14.649999999999999,
+      "emissions": 65.94,
+      "objective_value": 1391.98,
+      "optimality_gap": 0.0,
+      "execution_time_ms": 1.0734999959822744,
+      "peak_memory_bytes": 6400,
+      "nodes_explored": null,
+      "function_evaluations": null,
+      "convergence": [],
+      "nodes": [
+        "C01",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "astar",
+      "objective": "cost",
+      "run": 4,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 1391.98,
+      "time": 14.649999999999999,
+      "emissions": 65.94,
+      "objective_value": 1391.98,
+      "optimality_gap": 0.0,
+      "execution_time_ms": 1.3234999787528068,
+      "peak_memory_bytes": 6400,
+      "nodes_explored": null,
+      "function_evaluations": null,
+      "convergence": [],
+      "nodes": [
+        "C01",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "astar",
+      "objective": "cost",
+      "run": 5,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 1391.98,
+      "time": 14.649999999999999,
+      "emissions": 65.94,
+      "objective_value": 1391.98,
+      "optimality_gap": 0.0,
+      "execution_time_ms": 0.9382999851368368,
+      "peak_memory_bytes": 6400,
+      "nodes_explored": null,
+      "function_evaluations": null,
+      "convergence": [],
+      "nodes": [
+        "C01",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "nsga2",
+      "objective": "cost",
+      "run": 1,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 3247.5200000000004,
+      "time": 34.11,
+      "emissions": 155.63000000000002,
+      "objective_value": 3247.5200000000004,
+      "optimality_gap": 133.30220261785374,
+      "execution_time_ms": 248.9157000090927,
+      "peak_memory_bytes": 1300251,
+      "nodes_explored": null,
+      "function_evaluations": 30,
+      "convergence": [
+        3613.8199999999997,
+        3580.6399999999994,
+        3247.5200000000004
+      ],
+      "nodes": [
+        "C01",
+        "C04",
+        "C05",
+        "C23",
+        "C52",
+        "C51",
+        "C15",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C04_rail",
+        "C04_C05_rail",
+        "C05_C23_waterway",
+        "C23_C52_waterway",
+        "C52_C51_rail",
+        "C51_C15_rail",
+        "C15_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail",
+        "waterway",
+        "waterway",
+        "rail",
+        "rail",
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "nsga2",
+      "objective": "cost",
+      "run": 2,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 3580.6399999999994,
+      "time": 37.75,
+      "emissions": 254.15000000000003,
+      "objective_value": 3580.6399999999994,
+      "optimality_gap": 157.2335809422549,
+      "execution_time_ms": 263.1561000016518,
+      "peak_memory_bytes": 1319442,
+      "nodes_explored": null,
+      "function_evaluations": 30,
+      "convergence": [
+        1000000000000000.0,
+        3580.6399999999994,
+        3580.6399999999994
+      ],
+      "nodes": [
+        "C01",
+        "C04",
+        "C16",
+        "C14",
+        "C21",
+        "C25",
+        "C36",
+        "C50",
+        "C52",
+        "C07",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C04_rail",
+        "C04_C16_rail",
+        "C16_C14_road",
+        "C14_C21_rail",
+        "C21_C25_rail",
+        "C25_C36_rail",
+        "C36_C50_rail",
+        "C50_C52_road",
+        "C52_C07_waterway",
+        "C07_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail",
+        "road",
+        "rail",
+        "rail",
+        "rail",
+        "rail",
+        "road",
+        "waterway",
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "nsga2",
+      "objective": "cost",
+      "run": 3,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 3580.6399999999994,
+      "time": 37.75,
+      "emissions": 254.15000000000003,
+      "objective_value": 3580.6399999999994,
+      "optimality_gap": 157.2335809422549,
+      "execution_time_ms": 232.22760000498965,
+      "peak_memory_bytes": 1316700,
+      "nodes_explored": null,
+      "function_evaluations": 30,
+      "convergence": [
+        4429.88,
+        4429.88,
+        3580.6399999999994
+      ],
+      "nodes": [
+        "C01",
+        "C04",
+        "C16",
+        "C14",
+        "C21",
+        "C25",
+        "C36",
+        "C50",
+        "C52",
+        "C07",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C04_rail",
+        "C04_C16_rail",
+        "C16_C14_road",
+        "C14_C21_rail",
+        "C21_C25_rail",
+        "C25_C36_rail",
+        "C36_C50_rail",
+        "C50_C52_road",
+        "C52_C07_waterway",
+        "C07_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail",
+        "road",
+        "rail",
+        "rail",
+        "rail",
+        "rail",
+        "road",
+        "waterway",
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "nsga2",
+      "objective": "cost",
+      "run": 4,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 3950.36,
+      "time": 41.75,
+      "emissions": 325.26,
+      "objective_value": 3950.36,
+      "optimality_gap": 183.794307389474,
+      "execution_time_ms": 277.5326000119094,
+      "peak_memory_bytes": 1299566,
+      "nodes_explored": null,
+      "function_evaluations": 30,
+      "convergence": [
+        5549.400000000001,
+        3950.36,
+        3950.36
+      ],
+      "nodes": [
+        "C01",
+        "C04",
+        "C16",
+        "C14",
+        "C13",
+        "C17",
+        "C24",
+        "C22",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C04_rail",
+        "C04_C16_rail",
+        "C16_C14_road",
+        "C14_C13_rail",
+        "C13_C17_rail",
+        "C17_C24_rail",
+        "C24_C22_road",
+        "C22_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail",
+        "road",
+        "rail",
+        "rail",
+        "rail",
+        "road",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "nsga2",
+      "objective": "cost",
+      "run": 5,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 2883.8999999999996,
+      "time": 30.240000000000002,
+      "emissions": 139.36,
+      "objective_value": 2883.8999999999996,
+      "optimality_gap": 107.17970085777091,
+      "execution_time_ms": 243.95399997592904,
+      "peak_memory_bytes": 1320374,
+      "nodes_explored": null,
+      "function_evaluations": 30,
+      "convergence": [
+        2942.3600000000006,
+        2883.8999999999996,
+        2883.8999999999996
+      ],
+      "nodes": [
+        "C01",
+        "C04",
+        "C05",
+        "C23",
+        "C52",
+        "C07",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C04_rail",
+        "C04_C05_rail",
+        "C05_C23_waterway",
+        "C23_C52_waterway",
+        "C52_C07_waterway",
+        "C07_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail",
+        "waterway",
+        "waterway",
+        "waterway",
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "simulated_annealing",
+      "objective": "cost",
+      "run": 1,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 3702.88,
+      "time": 39.08,
+      "emissions": 280.2,
+      "objective_value": 3702.88,
+      "optimality_gap": 166.01531631201598,
+      "execution_time_ms": 108.60129998764023,
+      "peak_memory_bytes": 34106,
+      "nodes_explored": null,
+      "function_evaluations": 31,
+      "convergence": [
+        3702.88,
+        3702.88,
+        3702.88,
+        3702.88,
+        3702.88,
+        3702.88,
+        3702.88,
+        3702.88
+      ],
+      "nodes": [
+        "C01",
+        "C03",
+        "C31",
+        "C33",
+        "C30",
+        "C28",
+        "C22",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C03_rail",
+        "C03_C31_rail",
+        "C31_C33_road",
+        "C33_C30_rail",
+        "C30_C28_road",
+        "C28_C22_waterway",
+        "C22_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail",
+        "road",
+        "rail",
+        "road",
+        "waterway",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "simulated_annealing",
+      "objective": "cost",
+      "run": 2,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 2434.1800000000003,
+      "time": 25.659999999999997,
+      "emissions": 181.27,
+      "objective_value": 2434.1800000000003,
+      "optimality_gap": 74.87176539892818,
+      "execution_time_ms": 117.11409999406897,
+      "peak_memory_bytes": 34992,
+      "nodes_explored": null,
+      "function_evaluations": 31,
+      "convergence": [
+        2883.8999999999996,
+        2434.1800000000003,
+        2434.1800000000003,
+        2434.1800000000003,
+        2434.1800000000003,
+        2434.1800000000003,
+        2434.1800000000003,
+        2434.1800000000003,
+        2434.1800000000003
+      ],
+      "nodes": [
+        "C01",
+        "C49",
+        "C51",
+        "C52",
+        "C07",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C49_rail",
+        "C49_C51_road",
+        "C51_C52_rail",
+        "C52_C07_waterway",
+        "C07_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "road",
+        "rail",
+        "waterway",
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "simulated_annealing",
+      "objective": "cost",
+      "run": 3,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 4532.819999999999,
+      "time": 47.9,
+      "emissions": 384.52000000000004,
+      "objective_value": 4532.819999999999,
+      "optimality_gap": 225.63829940085336,
+      "execution_time_ms": 102.18740001437254,
+      "peak_memory_bytes": 29872,
+      "nodes_explored": null,
+      "function_evaluations": 31,
+      "convergence": [
+        4660.69,
+        4532.819999999999,
+        4532.819999999999,
+        4532.819999999999,
+        4532.819999999999
+      ],
+      "nodes": [
+        "C01",
+        "C49",
+        "C51",
+        "C15",
+        "C03",
+        "C31",
+        "C33",
+        "C30",
+        "C28",
+        "C22",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C49_rail",
+        "C49_C51_road",
+        "C51_C15_rail",
+        "C15_C03_rail",
+        "C03_C31_rail",
+        "C31_C33_road",
+        "C33_C30_rail",
+        "C30_C28_road",
+        "C28_C22_waterway",
+        "C22_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "road",
+        "rail",
+        "rail",
+        "rail",
+        "road",
+        "rail",
+        "road",
+        "waterway",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "simulated_annealing",
+      "objective": "cost",
+      "run": 4,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 2883.8999999999996,
+      "time": 30.240000000000002,
+      "emissions": 139.36,
+      "objective_value": 2883.8999999999996,
+      "optimality_gap": 107.17970085777091,
+      "execution_time_ms": 81.22829999774694,
+      "peak_memory_bytes": 36084,
+      "nodes_explored": null,
+      "function_evaluations": 31,
+      "convergence": [
+        3628.0699999999997,
+        3628.0699999999997,
+        2883.8999999999996,
+        2883.8999999999996,
+        2883.8999999999996,
+        2883.8999999999996,
+        2883.8999999999996,
+        2883.8999999999996,
+        2883.8999999999996,
+        2883.8999999999996,
+        2883.8999999999996,
+        2883.8999999999996
+      ],
+      "nodes": [
+        "C01",
+        "C04",
+        "C05",
+        "C23",
+        "C52",
+        "C07",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C04_rail",
+        "C04_C05_rail",
+        "C05_C23_waterway",
+        "C23_C52_waterway",
+        "C52_C07_waterway",
+        "C07_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail",
+        "waterway",
+        "waterway",
+        "waterway",
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "simulated_annealing",
+      "objective": "cost",
+      "run": 5,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 2124.48,
+      "time": 22.42,
+      "emissions": 159.26,
+      "objective_value": 2124.48,
+      "optimality_gap": 52.62288251267978,
+      "execution_time_ms": 69.86660000984557,
+      "peak_memory_bytes": 30712,
+      "nodes_explored": null,
+      "function_evaluations": 31,
+      "convergence": [
+        3150.3599999999997,
+        2741.3599999999997,
+        2741.3599999999997,
+        2741.3599999999997,
+        2741.3599999999997,
+        2741.3599999999997,
+        2741.3599999999997,
+        2124.48,
+        2124.48,
+        2124.48,
+        2124.48,
+        2124.48
+      ],
+      "nodes": [
+        "C01",
+        "C30",
+        "C44",
+        "C33",
+        "C31",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C30_rail",
+        "C30_C44_waterway",
+        "C44_C33_rail",
+        "C33_C31_road",
+        "C31_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "waterway",
+        "rail",
+        "road",
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "dijkstra",
+      "objective": "time",
+      "run": 1,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 1391.98,
+      "time": 14.649999999999999,
+      "emissions": 65.94,
+      "objective_value": 14.649999999999999,
+      "optimality_gap": 0.0,
+      "execution_time_ms": 0.9521000029053539,
+      "peak_memory_bytes": 10261,
+      "nodes_explored": null,
+      "function_evaluations": null,
+      "convergence": [],
+      "nodes": [
+        "C01",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "dijkstra",
+      "objective": "time",
+      "run": 2,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 1391.98,
+      "time": 14.649999999999999,
+      "emissions": 65.94,
+      "objective_value": 14.649999999999999,
+      "optimality_gap": 0.0,
+      "execution_time_ms": 0.8985000022221357,
+      "peak_memory_bytes": 10216,
+      "nodes_explored": null,
+      "function_evaluations": null,
+      "convergence": [],
+      "nodes": [
+        "C01",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "dijkstra",
+      "objective": "time",
+      "run": 3,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 1391.98,
+      "time": 14.649999999999999,
+      "emissions": 65.94,
+      "objective_value": 14.649999999999999,
+      "optimality_gap": 0.0,
+      "execution_time_ms": 0.9359999967273325,
+      "peak_memory_bytes": 10288,
+      "nodes_explored": null,
+      "function_evaluations": null,
+      "convergence": [],
+      "nodes": [
+        "C01",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "dijkstra",
+      "objective": "time",
+      "run": 4,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 1391.98,
+      "time": 14.649999999999999,
+      "emissions": 65.94,
+      "objective_value": 14.649999999999999,
+      "optimality_gap": 0.0,
+      "execution_time_ms": 0.849499978357926,
+      "peak_memory_bytes": 10288,
+      "nodes_explored": null,
+      "function_evaluations": null,
+      "convergence": [],
+      "nodes": [
+        "C01",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "dijkstra",
+      "objective": "time",
+      "run": 5,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 1391.98,
+      "time": 14.649999999999999,
+      "emissions": 65.94,
+      "objective_value": 14.649999999999999,
+      "optimality_gap": 0.0,
+      "execution_time_ms": 1.3240999833215028,
+      "peak_memory_bytes": 10288,
+      "nodes_explored": null,
+      "function_evaluations": null,
+      "convergence": [],
+      "nodes": [
+        "C01",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "astar",
+      "objective": "time",
+      "run": 1,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 1391.98,
+      "time": 14.649999999999999,
+      "emissions": 65.94,
+      "objective_value": 14.649999999999999,
+      "optimality_gap": 0.0,
+      "execution_time_ms": 0.759899994591251,
+      "peak_memory_bytes": 6216,
+      "nodes_explored": null,
+      "function_evaluations": null,
+      "convergence": [],
+      "nodes": [
+        "C01",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "astar",
+      "objective": "time",
+      "run": 2,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 1391.98,
+      "time": 14.649999999999999,
+      "emissions": 65.94,
+      "objective_value": 14.649999999999999,
+      "optimality_gap": 0.0,
+      "execution_time_ms": 0.677400006679818,
+      "peak_memory_bytes": 6334,
+      "nodes_explored": null,
+      "function_evaluations": null,
+      "convergence": [],
+      "nodes": [
+        "C01",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "astar",
+      "objective": "time",
+      "run": 3,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 1391.98,
+      "time": 14.649999999999999,
+      "emissions": 65.94,
+      "objective_value": 14.649999999999999,
+      "optimality_gap": 0.0,
+      "execution_time_ms": 0.8635999984107912,
+      "peak_memory_bytes": 6288,
+      "nodes_explored": null,
+      "function_evaluations": null,
+      "convergence": [],
+      "nodes": [
+        "C01",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "astar",
+      "objective": "time",
+      "run": 4,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 1391.98,
+      "time": 14.649999999999999,
+      "emissions": 65.94,
+      "objective_value": 14.649999999999999,
+      "optimality_gap": 0.0,
+      "execution_time_ms": 0.68450000253506,
+      "peak_memory_bytes": 6288,
+      "nodes_explored": null,
+      "function_evaluations": null,
+      "convergence": [],
+      "nodes": [
+        "C01",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "astar",
+      "objective": "time",
+      "run": 5,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 1391.98,
+      "time": 14.649999999999999,
+      "emissions": 65.94,
+      "objective_value": 14.649999999999999,
+      "optimality_gap": 0.0,
+      "execution_time_ms": 0.65640002139844,
+      "peak_memory_bytes": 6288,
+      "nodes_explored": null,
+      "function_evaluations": null,
+      "convergence": [],
+      "nodes": [
+        "C01",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "nsga2",
+      "objective": "time",
+      "run": 1,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 3247.5200000000004,
+      "time": 34.11,
+      "emissions": 155.63000000000002,
+      "objective_value": 34.11,
+      "optimality_gap": 132.83276450511948,
+      "execution_time_ms": 222.52979999757372,
+      "peak_memory_bytes": 1296894,
+      "nodes_explored": null,
+      "function_evaluations": 30,
+      "convergence": [
+        38.160000000000004,
+        37.75,
+        34.11
+      ],
+      "nodes": [
+        "C01",
+        "C04",
+        "C05",
+        "C23",
+        "C52",
+        "C51",
+        "C15",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C04_rail",
+        "C04_C05_rail",
+        "C05_C23_waterway",
+        "C23_C52_waterway",
+        "C52_C51_rail",
+        "C51_C15_rail",
+        "C15_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail",
+        "waterway",
+        "waterway",
+        "rail",
+        "rail",
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "nsga2",
+      "objective": "time",
+      "run": 2,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 3580.6399999999994,
+      "time": 37.75,
+      "emissions": 254.15000000000003,
+      "objective_value": 37.75,
+      "optimality_gap": 157.67918088737204,
+      "execution_time_ms": 293.6735000112094,
+      "peak_memory_bytes": 1302794,
+      "nodes_explored": null,
+      "function_evaluations": 30,
+      "convergence": [
+        1000000000000000.0,
+        37.75,
+        37.75
+      ],
+      "nodes": [
+        "C01",
+        "C04",
+        "C16",
+        "C14",
+        "C21",
+        "C25",
+        "C36",
+        "C50",
+        "C52",
+        "C07",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C04_rail",
+        "C04_C16_rail",
+        "C16_C14_road",
+        "C14_C21_rail",
+        "C21_C25_rail",
+        "C25_C36_rail",
+        "C36_C50_rail",
+        "C50_C52_road",
+        "C52_C07_waterway",
+        "C07_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail",
+        "road",
+        "rail",
+        "rail",
+        "rail",
+        "rail",
+        "road",
+        "waterway",
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "nsga2",
+      "objective": "time",
+      "run": 3,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 3580.6399999999994,
+      "time": 37.75,
+      "emissions": 254.15000000000003,
+      "objective_value": 37.75,
+      "optimality_gap": 157.67918088737204,
+      "execution_time_ms": 211.04659998673014,
+      "peak_memory_bytes": 1307882,
+      "nodes_explored": null,
+      "function_evaluations": 30,
+      "convergence": [
+        46.79,
+        46.79,
+        37.75
+      ],
+      "nodes": [
+        "C01",
+        "C04",
+        "C16",
+        "C14",
+        "C21",
+        "C25",
+        "C36",
+        "C50",
+        "C52",
+        "C07",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C04_rail",
+        "C04_C16_rail",
+        "C16_C14_road",
+        "C14_C21_rail",
+        "C21_C25_rail",
+        "C25_C36_rail",
+        "C36_C50_rail",
+        "C50_C52_road",
+        "C52_C07_waterway",
+        "C07_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail",
+        "road",
+        "rail",
+        "rail",
+        "rail",
+        "rail",
+        "road",
+        "waterway",
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "nsga2",
+      "objective": "time",
+      "run": 4,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 3950.36,
+      "time": 41.75,
+      "emissions": 325.26,
+      "objective_value": 41.75,
+      "optimality_gap": 184.98293515358364,
+      "execution_time_ms": 249.1955000150483,
+      "peak_memory_bytes": 1283425,
+      "nodes_explored": null,
+      "function_evaluations": 30,
+      "convergence": [
+        58.71,
+        41.75,
+        41.75
+      ],
+      "nodes": [
+        "C01",
+        "C04",
+        "C16",
+        "C14",
+        "C13",
+        "C17",
+        "C24",
+        "C22",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C04_rail",
+        "C04_C16_rail",
+        "C16_C14_road",
+        "C14_C13_rail",
+        "C13_C17_rail",
+        "C17_C24_rail",
+        "C24_C22_road",
+        "C22_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail",
+        "road",
+        "rail",
+        "rail",
+        "rail",
+        "road",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "nsga2",
+      "objective": "time",
+      "run": 5,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 2883.8999999999996,
+      "time": 30.240000000000002,
+      "emissions": 139.36,
+      "objective_value": 30.240000000000002,
+      "optimality_gap": 106.41638225255976,
+      "execution_time_ms": 207.95080001698807,
+      "peak_memory_bytes": 1310651,
+      "nodes_explored": null,
+      "function_evaluations": 30,
+      "convergence": [
+        31.040000000000003,
+        30.240000000000002,
+        30.240000000000002
+      ],
+      "nodes": [
+        "C01",
+        "C04",
+        "C05",
+        "C23",
+        "C52",
+        "C07",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C04_rail",
+        "C04_C05_rail",
+        "C05_C23_waterway",
+        "C23_C52_waterway",
+        "C52_C07_waterway",
+        "C07_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail",
+        "waterway",
+        "waterway",
+        "waterway",
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "simulated_annealing",
+      "objective": "time",
+      "run": 1,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 3702.88,
+      "time": 39.08,
+      "emissions": 280.2,
+      "objective_value": 39.08,
+      "optimality_gap": 166.7576791808874,
+      "execution_time_ms": 110.56820000521839,
+      "peak_memory_bytes": 35840,
+      "nodes_explored": null,
+      "function_evaluations": 31,
+      "convergence": [
+        39.08,
+        39.08,
+        39.08,
+        39.08,
+        39.08,
+        39.08,
+        39.08,
+        39.08
+      ],
+      "nodes": [
+        "C01",
+        "C03",
+        "C31",
+        "C33",
+        "C30",
+        "C28",
+        "C22",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C03_rail",
+        "C03_C31_rail",
+        "C31_C33_road",
+        "C33_C30_rail",
+        "C30_C28_road",
+        "C28_C22_waterway",
+        "C22_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail",
+        "road",
+        "rail",
+        "road",
+        "waterway",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "simulated_annealing",
+      "objective": "time",
+      "run": 2,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 2434.1800000000003,
+      "time": 25.659999999999997,
+      "emissions": 181.27,
+      "objective_value": 25.659999999999997,
+      "optimality_gap": 75.15358361774743,
+      "execution_time_ms": 74.20529998489656,
+      "peak_memory_bytes": 29736,
+      "nodes_explored": null,
+      "function_evaluations": 31,
+      "convergence": [
+        30.240000000000002,
+        25.659999999999997,
+        25.659999999999997,
+        25.659999999999997,
+        25.659999999999997,
+        25.659999999999997,
+        25.659999999999997,
+        25.659999999999997,
+        25.659999999999997,
+        25.659999999999997,
+        25.659999999999997
+      ],
+      "nodes": [
+        "C01",
+        "C49",
+        "C51",
+        "C52",
+        "C07",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C49_rail",
+        "C49_C51_road",
+        "C51_C52_rail",
+        "C52_C07_waterway",
+        "C07_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "road",
+        "rail",
+        "waterway",
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "simulated_annealing",
+      "objective": "time",
+      "run": 3,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 4532.819999999999,
+      "time": 47.9,
+      "emissions": 384.52000000000004,
+      "objective_value": 47.9,
+      "optimality_gap": 226.962457337884,
+      "execution_time_ms": 81.19210001314059,
+      "peak_memory_bytes": 31296,
+      "nodes_explored": null,
+      "function_evaluations": 31,
+      "convergence": [
+        49.2,
+        47.9,
+        47.9,
+        47.9,
+        47.9,
+        47.9,
+        47.9,
+        47.9
+      ],
+      "nodes": [
+        "C01",
+        "C49",
+        "C51",
+        "C15",
+        "C03",
+        "C31",
+        "C33",
+        "C30",
+        "C28",
+        "C22",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C49_rail",
+        "C49_C51_road",
+        "C51_C15_rail",
+        "C15_C03_rail",
+        "C03_C31_rail",
+        "C31_C33_road",
+        "C33_C30_rail",
+        "C30_C28_road",
+        "C28_C22_waterway",
+        "C22_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "road",
+        "rail",
+        "rail",
+        "rail",
+        "road",
+        "rail",
+        "road",
+        "waterway",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "simulated_annealing",
+      "objective": "time",
+      "run": 4,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 3144.5699999999997,
+      "time": 33.01,
+      "emissions": 151.12,
+      "objective_value": 33.01,
+      "optimality_gap": 125.32423208191128,
+      "execution_time_ms": 81.47289999760687,
+      "peak_memory_bytes": 34354,
+      "nodes_explored": null,
+      "function_evaluations": 31,
+      "convergence": [
+        38.29,
+        38.29,
+        38.29,
+        38.29,
+        33.01,
+        33.01,
+        33.01,
+        33.01,
+        33.01,
+        33.01,
+        33.01
+      ],
+      "nodes": [
+        "C01",
+        "C04",
+        "C05",
+        "C19",
+        "C23",
+        "C52",
+        "C07",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C04_rail",
+        "C04_C05_rail",
+        "C05_C19_rail",
+        "C19_C23_rail",
+        "C23_C52_waterway",
+        "C52_C07_waterway",
+        "C07_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail",
+        "rail",
+        "rail",
+        "waterway",
+        "waterway",
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "simulated_annealing",
+      "objective": "time",
+      "run": 5,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 2741.3599999999997,
+      "time": 28.869999999999997,
+      "emissions": 186.56000000000003,
+      "objective_value": 28.869999999999997,
+      "optimality_gap": 97.06484641638225,
+      "execution_time_ms": 76.36559999082237,
+      "peak_memory_bytes": 31240,
+      "nodes_explored": null,
+      "function_evaluations": 31,
+      "convergence": [
+        33.1,
+        28.869999999999997,
+        28.869999999999997,
+        28.869999999999997,
+        28.869999999999997,
+        28.869999999999997,
+        28.869999999999997,
+        28.869999999999997,
+        28.869999999999997,
+        28.869999999999997,
+        28.869999999999997,
+        28.869999999999997
+      ],
+      "nodes": [
+        "C01",
+        "C30",
+        "C44",
+        "C33",
+        "C54",
+        "C52",
+        "C07",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C30_rail",
+        "C30_C44_waterway",
+        "C44_C33_rail",
+        "C33_C54_rail",
+        "C54_C52_road",
+        "C52_C07_waterway",
+        "C07_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "waterway",
+        "rail",
+        "rail",
+        "road",
+        "waterway",
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "dijkstra",
+      "objective": "emissions",
+      "run": 1,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 1391.98,
+      "time": 14.649999999999999,
+      "emissions": 65.94,
+      "objective_value": 65.94,
+      "optimality_gap": 0.0,
+      "execution_time_ms": 1.208700006827712,
+      "peak_memory_bytes": 9864,
+      "nodes_explored": null,
+      "function_evaluations": null,
+      "convergence": [],
+      "nodes": [
+        "C01",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "dijkstra",
+      "objective": "emissions",
+      "run": 2,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 1391.98,
+      "time": 14.649999999999999,
+      "emissions": 65.94,
+      "objective_value": 65.94,
+      "optimality_gap": 0.0,
+      "execution_time_ms": 2.07570000202395,
+      "peak_memory_bytes": 9864,
+      "nodes_explored": null,
+      "function_evaluations": null,
+      "convergence": [],
+      "nodes": [
+        "C01",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "dijkstra",
+      "objective": "emissions",
+      "run": 3,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 1391.98,
+      "time": 14.649999999999999,
+      "emissions": 65.94,
+      "objective_value": 65.94,
+      "optimality_gap": 0.0,
+      "execution_time_ms": 2.0406999974511564,
+      "peak_memory_bytes": 9888,
+      "nodes_explored": null,
+      "function_evaluations": null,
+      "convergence": [],
+      "nodes": [
+        "C01",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "dijkstra",
+      "objective": "emissions",
+      "run": 4,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 1391.98,
+      "time": 14.649999999999999,
+      "emissions": 65.94,
+      "objective_value": 65.94,
+      "optimality_gap": 0.0,
+      "execution_time_ms": 1.5081000165082514,
+      "peak_memory_bytes": 9936,
+      "nodes_explored": null,
+      "function_evaluations": null,
+      "convergence": [],
+      "nodes": [
+        "C01",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "dijkstra",
+      "objective": "emissions",
+      "run": 5,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 1391.98,
+      "time": 14.649999999999999,
+      "emissions": 65.94,
+      "objective_value": 65.94,
+      "optimality_gap": 0.0,
+      "execution_time_ms": 2.0557999960146844,
+      "peak_memory_bytes": 9936,
+      "nodes_explored": null,
+      "function_evaluations": null,
+      "convergence": [],
+      "nodes": [
+        "C01",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "astar",
+      "objective": "emissions",
+      "run": 1,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 1391.98,
+      "time": 14.649999999999999,
+      "emissions": 65.94,
+      "objective_value": 65.94,
+      "optimality_gap": 0.0,
+      "execution_time_ms": 1.1992000218015164,
+      "peak_memory_bytes": 5872,
+      "nodes_explored": null,
+      "function_evaluations": null,
+      "convergence": [],
+      "nodes": [
+        "C01",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "astar",
+      "objective": "emissions",
+      "run": 2,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 1391.98,
+      "time": 14.649999999999999,
+      "emissions": 65.94,
+      "objective_value": 65.94,
+      "optimality_gap": 0.0,
+      "execution_time_ms": 1.232499984325841,
+      "peak_memory_bytes": 5944,
+      "nodes_explored": null,
+      "function_evaluations": null,
+      "convergence": [],
+      "nodes": [
+        "C01",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "astar",
+      "objective": "emissions",
+      "run": 3,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 1391.98,
+      "time": 14.649999999999999,
+      "emissions": 65.94,
+      "objective_value": 65.94,
+      "optimality_gap": 0.0,
+      "execution_time_ms": 0.8355000172741711,
+      "peak_memory_bytes": 5944,
+      "nodes_explored": null,
+      "function_evaluations": null,
+      "convergence": [],
+      "nodes": [
+        "C01",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "astar",
+      "objective": "emissions",
+      "run": 4,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 1391.98,
+      "time": 14.649999999999999,
+      "emissions": 65.94,
+      "objective_value": 65.94,
+      "optimality_gap": 0.0,
+      "execution_time_ms": 1.2428000045474619,
+      "peak_memory_bytes": 5944,
+      "nodes_explored": null,
+      "function_evaluations": null,
+      "convergence": [],
+      "nodes": [
+        "C01",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "astar",
+      "objective": "emissions",
+      "run": 5,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 1391.98,
+      "time": 14.649999999999999,
+      "emissions": 65.94,
+      "objective_value": 65.94,
+      "optimality_gap": 0.0,
+      "execution_time_ms": 1.5528000076301396,
+      "peak_memory_bytes": 5944,
+      "nodes_explored": null,
+      "function_evaluations": null,
+      "convergence": [],
+      "nodes": [
+        "C01",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "nsga2",
+      "objective": "emissions",
+      "run": 1,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 4144.650000000001,
+      "time": 43.65,
+      "emissions": 251.71000000000004,
+      "objective_value": 251.71000000000004,
+      "optimality_gap": 281.72581134364583,
+      "execution_time_ms": 283.43609999865294,
+      "peak_memory_bytes": 1305449,
+      "nodes_explored": null,
+      "function_evaluations": 30,
+      "convergence": [
+        251.71000000000004,
+        251.71000000000004,
+        251.71000000000004
+      ],
+      "nodes": [
+        "C01",
+        "C02",
+        "C06",
+        "C09",
+        "C10",
+        "C13",
+        "C14",
+        "C21",
+        "C25",
+        "C36",
+        "C50",
+        "C52",
+        "C07",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C02_rail",
+        "C02_C06_rail",
+        "C06_C09_rail",
+        "C09_C10_rail",
+        "C10_C13_rail",
+        "C13_C14_rail",
+        "C14_C21_rail",
+        "C21_C25_rail",
+        "C25_C36_rail",
+        "C36_C50_rail",
+        "C50_C52_road",
+        "C52_C07_waterway",
+        "C07_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail",
+        "rail",
+        "rail",
+        "rail",
+        "rail",
+        "rail",
+        "rail",
+        "rail",
+        "rail",
+        "road",
+        "waterway",
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "nsga2",
+      "objective": "emissions",
+      "run": 2,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 4309.4800000000005,
+      "time": 45.32,
+      "emissions": 252.36000000000004,
+      "objective_value": 252.36000000000004,
+      "optimality_gap": 282.7115559599637,
+      "execution_time_ms": 178.80750002223067,
+      "peak_memory_bytes": 1297226,
+      "nodes_explored": null,
+      "function_evaluations": 30,
+      "convergence": [
+        261.36,
+        252.36000000000004,
+        252.36000000000004
+      ],
+      "nodes": [
+        "C01",
+        "C02",
+        "C06",
+        "C09",
+        "C10",
+        "C13",
+        "C14",
+        "C21",
+        "C19",
+        "C23",
+        "C52",
+        "C07",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C02_rail",
+        "C02_C06_rail",
+        "C06_C09_rail",
+        "C09_C10_rail",
+        "C10_C13_rail",
+        "C13_C14_rail",
+        "C14_C21_rail",
+        "C21_C19_road",
+        "C19_C23_rail",
+        "C23_C52_waterway",
+        "C52_C07_waterway",
+        "C07_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail",
+        "rail",
+        "rail",
+        "rail",
+        "rail",
+        "rail",
+        "road",
+        "rail",
+        "waterway",
+        "waterway",
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "nsga2",
+      "objective": "emissions",
+      "run": 3,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 4721.51,
+      "time": 49.64,
+      "emissions": 257.09999999999997,
+      "objective_value": 257.09999999999997,
+      "optimality_gap": 289.8999090081892,
+      "execution_time_ms": 215.5930000008084,
+      "peak_memory_bytes": 1299814,
+      "nodes_explored": null,
+      "function_evaluations": 30,
+      "convergence": [
+        257.09999999999997,
+        257.09999999999997,
+        257.09999999999997
+      ],
+      "nodes": [
+        "C01",
+        "C04",
+        "C05",
+        "C11",
+        "C42",
+        "C40",
+        "C19",
+        "C23",
+        "C52",
+        "C07",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C04_rail",
+        "C04_C05_rail",
+        "C05_C11_rail",
+        "C11_C42_rail",
+        "C42_C40_road",
+        "C40_C19_rail",
+        "C19_C23_rail",
+        "C23_C52_waterway",
+        "C52_C07_waterway",
+        "C07_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail",
+        "rail",
+        "rail",
+        "road",
+        "rail",
+        "rail",
+        "waterway",
+        "waterway",
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "nsga2",
+      "objective": "emissions",
+      "run": 4,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 3150.3599999999997,
+      "time": 33.1,
+      "emissions": 179.88000000000002,
+      "objective_value": 179.88000000000002,
+      "optimality_gap": 172.79344858962696,
+      "execution_time_ms": 269.3622999940999,
+      "peak_memory_bytes": 1292904,
+      "nodes_explored": null,
+      "function_evaluations": 30,
+      "convergence": [
+        1000000000000000.0,
+        1000000000000000.0,
+        179.88000000000002
+      ],
+      "nodes": [
+        "C01",
+        "C04",
+        "C32",
+        "C38",
+        "C40",
+        "C19",
+        "C23",
+        "C52",
+        "C07",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C04_rail",
+        "C04_C32_rail",
+        "C32_C38_rail",
+        "C38_C40_road",
+        "C40_C19_rail",
+        "C19_C23_rail",
+        "C23_C52_waterway",
+        "C52_C07_waterway",
+        "C07_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail",
+        "rail",
+        "road",
+        "rail",
+        "rail",
+        "waterway",
+        "waterway",
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "nsga2",
+      "objective": "emissions",
+      "run": 5,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 2942.3600000000006,
+      "time": 31.040000000000003,
+      "emissions": 194.76000000000002,
+      "objective_value": 194.76000000000002,
+      "optimality_gap": 195.3594176524113,
+      "execution_time_ms": 258.9182000083383,
+      "peak_memory_bytes": 1310096,
+      "nodes_explored": null,
+      "function_evaluations": 30,
+      "convergence": [
+        194.76000000000002,
+        194.76000000000002,
+        194.76000000000002
+      ],
+      "nodes": [
+        "C01",
+        "C30",
+        "C33",
+        "C54",
+        "C52",
+        "C51",
+        "C15",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C30_rail",
+        "C30_C33_rail",
+        "C33_C54_rail",
+        "C54_C52_road",
+        "C52_C51_rail",
+        "C51_C15_rail",
+        "C15_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail",
+        "rail",
+        "road",
+        "rail",
+        "rail",
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "simulated_annealing",
+      "objective": "emissions",
+      "run": 1,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 2883.8999999999996,
+      "time": 30.240000000000002,
+      "emissions": 139.36,
+      "objective_value": 139.36,
+      "optimality_gap": 111.34364573855022,
+      "execution_time_ms": 173.49169999943115,
+      "peak_memory_bytes": 40855,
+      "nodes_explored": null,
+      "function_evaluations": 31,
+      "convergence": [
+        139.36,
+        139.36,
+        139.36,
+        139.36,
+        139.36,
+        139.36
+      ],
+      "nodes": [
+        "C01",
+        "C04",
+        "C05",
+        "C23",
+        "C52",
+        "C07",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C04_rail",
+        "C04_C05_rail",
+        "C05_C23_waterway",
+        "C23_C52_waterway",
+        "C52_C07_waterway",
+        "C07_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail",
+        "waterway",
+        "waterway",
+        "waterway",
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "simulated_annealing",
+      "objective": "emissions",
+      "run": 2,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 2883.8999999999996,
+      "time": 30.240000000000002,
+      "emissions": 139.36,
+      "objective_value": 139.36,
+      "optimality_gap": 111.34364573855022,
+      "execution_time_ms": 63.97469999501482,
+      "peak_memory_bytes": 31648,
+      "nodes_explored": null,
+      "function_evaluations": 31,
+      "convergence": [
+        139.36,
+        139.36,
+        139.36,
+        139.36,
+        139.36
+      ],
+      "nodes": [
+        "C01",
+        "C04",
+        "C05",
+        "C23",
+        "C52",
+        "C07",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C04_rail",
+        "C04_C05_rail",
+        "C05_C23_waterway",
+        "C23_C52_waterway",
+        "C52_C07_waterway",
+        "C07_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail",
+        "waterway",
+        "waterway",
+        "waterway",
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "simulated_annealing",
+      "objective": "emissions",
+      "run": 3,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 3247.5200000000004,
+      "time": 34.11,
+      "emissions": 155.63000000000002,
+      "objective_value": 155.63000000000002,
+      "optimality_gap": 136.01759175007587,
+      "execution_time_ms": 116.38170000514947,
+      "peak_memory_bytes": 33464,
+      "nodes_explored": null,
+      "function_evaluations": 31,
+      "convergence": [
+        243.42999999999998,
+        243.42999999999998,
+        155.63000000000002,
+        155.63000000000002
+      ],
+      "nodes": [
+        "C01",
+        "C04",
+        "C05",
+        "C23",
+        "C52",
+        "C51",
+        "C15",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C04_rail",
+        "C04_C05_rail",
+        "C05_C23_waterway",
+        "C23_C52_waterway",
+        "C52_C51_rail",
+        "C51_C15_rail",
+        "C15_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail",
+        "waterway",
+        "waterway",
+        "rail",
+        "rail",
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "simulated_annealing",
+      "objective": "emissions",
+      "run": 4,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 2883.8999999999996,
+      "time": 30.240000000000002,
+      "emissions": 139.36,
+      "objective_value": 139.36,
+      "optimality_gap": 111.34364573855022,
+      "execution_time_ms": 102.43210001499392,
+      "peak_memory_bytes": 34024,
+      "nodes_explored": null,
+      "function_evaluations": 31,
+      "convergence": [
+        252.36000000000004,
+        251.71000000000004,
+        251.71000000000004,
+        251.71000000000004,
+        139.36,
+        139.36,
+        139.36,
+        139.36,
+        139.36
+      ],
+      "nodes": [
+        "C01",
+        "C04",
+        "C05",
+        "C23",
+        "C52",
+        "C07",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C04_rail",
+        "C04_C05_rail",
+        "C05_C23_waterway",
+        "C23_C52_waterway",
+        "C52_C07_waterway",
+        "C07_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail",
+        "waterway",
+        "waterway",
+        "waterway",
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "simulated_annealing",
+      "objective": "emissions",
+      "run": 5,
+      "source": "C01",
+      "destination": "C08",
+      "valid": true,
+      "cost": 3656.99,
+      "time": 38.58,
+      "emissions": 243.42999999999998,
+      "objective_value": 243.42999999999998,
+      "optimality_gap": 269.16894146193505,
+      "execution_time_ms": 101.81640001246706,
+      "peak_memory_bytes": 35826,
+      "nodes_explored": null,
+      "function_evaluations": 31,
+      "convergence": [
+        257.09999999999997,
+        252.36000000000004,
+        243.42999999999998,
+        243.42999999999998,
+        243.42999999999998,
+        243.42999999999998
+      ],
+      "nodes": [
+        "C01",
+        "C02",
+        "C06",
+        "C09",
+        "C10",
+        "C13",
+        "C17",
+        "C15",
+        "C03",
+        "C08"
+      ],
+      "edge_ids": [
+        "C01_C02_rail",
+        "C02_C06_rail",
+        "C06_C09_rail",
+        "C09_C10_rail",
+        "C10_C13_rail",
+        "C13_C17_rail",
+        "C17_C15_road",
+        "C15_C03_rail",
+        "C03_C08_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail",
+        "rail",
+        "rail",
+        "rail",
+        "rail",
+        "road",
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    }
+  ]
+}

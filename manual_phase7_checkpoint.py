@@ -9,7 +9,7 @@ from backend.graph import load_graph
 DATASETS_ROOT = Path("datasets/processed")
 DATASET_NAMES = tuple(f"dataset_{size}" for size in (10, 20, 30, 40, 50, 60))
 OBJECTIVES = ("cost", "time", "emissions")
-ALGORITHMS = ("dijkstra", "astar", "nsga2", "simulated_annealing")
+ALGORITHMS = ("dijkstra", "astar", "nsga2", "simulated_annealing", "aco")
 
 
 def main() -> None:
@@ -24,6 +24,8 @@ def main() -> None:
                     if algorithm == "nsga2"
                     else {"iterations": 5}
                     if algorithm == "simulated_annealing"
+                    else {"ants": 3, "iterations": 3}
+                    if algorithm == "aco"
                     else {}
                 )
                 result = optimize(

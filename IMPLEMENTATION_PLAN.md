@@ -25,7 +25,7 @@ Algorithm switching selects an existing valid record from the current
 experiment and never reruns optimization. The map uses city coordinates and
 does not represent actual road, rail, air, or waterway geometries.
 
-The application will compare Dijkstra's Algorithm, A* Search, NSGA-II and Simulated Annealing. Cost, time and emissions will remain separate objectives; they will not be combined into a weighted score. Quantum and hybrid optimization are explicitly outside the scope of this roadmap and will be considered only after the classical system is complete.
+The application will compare Dijkstra's Algorithm, A* Search, NSGA-II, Simulated Annealing and Ant Colony Optimization. Cost, time and emissions will remain separate objectives; they will not be combined into a weighted score. Quantum and hybrid optimization are explicitly outside the scope of this roadmap and will be considered only after the classical system is complete.
 
 ## Technology Stack
 
@@ -115,7 +115,7 @@ Planned modules should remain focused and independently testable. The structure 
 
 ### Phase 3: Classical Optimization Algorithm Implementation
 
-**Objective:** Implement four classical algorithms behind a common optimization interface.
+**Objective:** Implement five classical algorithms behind a common optimization interface.
 
 **Tasks:**
 
@@ -123,6 +123,8 @@ Planned modules should remain focused and independently testable. The structure 
 - Implement A* Search with an admissible heuristic for the selected objective.
 - Implement NSGA-II with a discrete route representation and single-objective fitness for the selected primary comparison objective.
 - Implement Simulated Annealing with feasible route-based neighborhood operations.
+- Implement Ant Colony Optimization with seeded pheromone trails and visited-city constraints.
+- Implement Ant Colony Optimization with seeded edge pheromones and visited-city constraints.
 - Allow every algorithm to optimize cost, time or emissions independently.
 - Pass the same graph, source, destination and objective to every algorithm.
 - Return a standardized result containing the route, modes, objective value and algorithm metadata.
@@ -148,7 +150,7 @@ Planned modules should remain focused and independently testable. The structure 
 
 **Expected deliverable:** A reusable evaluation and benchmarking engine.
 
-**Runnable checkpoint:** Run all four algorithms on the same dataset and objective, validate their solutions, and produce a comparative results table using only measured values.
+**Runnable checkpoint:** Run all five algorithms on the same dataset and objective, validate their solutions, and produce a comparative results table using only measured values.
 
 ### Phase 5: User-Controlled Experiment Manager and Results Storage
 
@@ -158,14 +160,14 @@ Planned modules should remain focused and independently testable. The structure 
 
 - Accept one or more selected datasets and objectives.
 - Generate combinations dynamically from those selections.
-- Execute all four algorithms for each selected combination.
+- Execute all five algorithms for each selected combination.
 - Guarantee that unselected datasets and objectives are never loaded or executed.
 - Load only data required for the current experiment.
 - Store experiment configuration and algorithm results in CSV/JSON.
 - Keep results separate for every dataset-objective combination.
 - Handle invalid selections and disconnected source-destination pairs explicitly.
 
-For `d` selected datasets and `o` selected objectives, the execution manager must schedule exactly `d × o` combinations and `4 × d × o` algorithm executions, subject to valid input and configured repeated-run behavior.
+For `d` selected datasets and `o` selected objectives, the execution manager must schedule exactly `d × o` combinations and `5 × d × o` algorithm executions, subject to valid input and configured repeated-run behavior.
 
 **Expected deliverable:** A working experiment execution engine with persistent result storage.
 
@@ -202,8 +204,8 @@ dataset.
 
 **Scope and workflow:**
 
-- After an experiment completes, select Dijkstra, A*, NSGA-II or Simulated
-  Annealing in the Route Visualization section.
+- After an experiment completes, select Dijkstra, A*, NSGA-II, Simulated
+  Annealing or ACO in the Route Visualization section.
 - Select **View Route on Map** to render that algorithm's existing result; no
   optimization is executed again.
 - Resolve each route leg using its preserved NetworkX `MultiDiGraph` edge key,
@@ -250,7 +252,7 @@ dashboard-only fallback label.
 **Tasks:**
 
 - Perform integration testing across all six datasets.
-- Test all three objectives and all four algorithms.
+- Test all three objectives and all five algorithms.
 - Verify route feasibility, objective calculations and output consistency.
 - Test disconnected networks, invalid inputs and other edge cases.
 - Verify selection logic and exact execution behavior.
@@ -268,7 +270,7 @@ The classical implementation is complete when:
 
 1. Six validated datasets for 10–60 cities can be loaded.
 2. Each dataset can be represented as a multimodal `MultiDiGraph` with reconstructable edge modes.
-3. All four algorithms optimize cost, time and emissions independently through a common interface.
+3. All five algorithms optimize cost, time and emissions independently through a common interface.
 4. Routes are validated and benchmarked using measured execution and memory data.
 5. The experiment manager executes only explicitly selected dataset-objective combinations.
 6. Streamlit supports configuration, execution, result comparison, experiment

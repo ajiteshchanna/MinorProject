@@ -28,7 +28,7 @@ progressed through seven phases:
    labelled simulated transport attributes.
 2. The datasets were converted into validated NetworkX `MultiDiGraph`
    objects, preserving parallel edges and connection identities.
-3. Four algorithms were placed behind a common result interface.
+3. Five algorithms were placed behind a common result interface.
 4. Routes were independently validated and benchmarked.
 5. A user-controlled manager orchestrated only selected experiments and
    persisted their results.
@@ -102,20 +102,24 @@ visualize the exact selected transport edge.
 
 ### Phase 3: Classical Optimization Algorithms
 
-**Objective:** Implement four algorithms behind one optimization interface.
+**Objective:** Implement five algorithms behind one optimization interface.
 
 **Implemented modules:** `backend/algorithms/common.py`,
-`dijkstra.py`, `astar.py`, `nsga2.py` and `simulated_annealing.py`.
+`dijkstra.py`, `astar.py`, `nsga2.py`, `simulated_annealing.py` and
+`ant_colony.py`.
 
 - **Dijkstra:** objective-weighted shortest-path search.
 - **A* Search:** objective-weighted search with a coordinate-based heuristic.
 - **NSGA-II:** `pymoo` discrete waypoint optimization.
 - **Simulated Annealing:** stochastic waypoint search with temperature cooling.
+- **Ant Colony Optimization:** seeded edge-pheromone search with visited-city
+  constraints and heuristic route construction.
 
 Every algorithm returns `OptimizationResult`, containing ordered nodes, exact
 edge IDs, modes, objective value, feasibility and metadata. Dijkstra and A*
 are deterministic shortest-path approaches. NSGA-II and Simulated Annealing
-are iterative and use stochastic search settings.
+are iterative and use stochastic search settings. ACO uses seeded ant
+construction, pheromone evaporation and route deposits.
 
 NSGA-II is used as a single-objective run for the selected objective. It does
 not combine cost, time and emissions into a multi-objective score.
@@ -124,7 +128,7 @@ not combine cost, time and emissions into a multi-objective score.
 objectives, route shape, reproducibility for seeded stochastic runs and
 invalid inputs.
 
-**Outcome:** Four classical optimizers share a consistent, edge-preserving
+**Outcome:** Five classical optimizers share a consistent, edge-preserving
 result contract.
 
 ### Phase 4: Evaluation and Benchmarking
@@ -436,7 +440,7 @@ controls, charts, popovers and route maps.
 
 - Six deterministic datasets with documented provenance.
 - Validated directed multimodal `MultiDiGraph` construction.
-- Dijkstra, A*, NSGA-II and Simulated Annealing.
+- Dijkstra, A*, NSGA-II, Simulated Annealing and ACO.
 - Independent cost, time and emissions optimization.
 - Exact route-edge validation and benchmarking.
 - User-controlled experiment execution and CSV/JSON persistence.
@@ -489,7 +493,7 @@ These possibilities are separate from the implemented classical system.
 
 The project has developed a reproducible classical framework for studying
 multimodal route optimization across six deterministic Indian-city networks.
-It preserves parallel transport choices, compares four algorithms on
+It preserves parallel transport choices, compares five algorithms on
 independent objectives, measures solution and resource behaviour, stores
 results, and presents them through an interactive dashboard and schematic map.
 

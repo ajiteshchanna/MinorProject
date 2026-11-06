@@ -12,7 +12,7 @@ from .algorithms import OptimizationResult, optimize
 from .graph import load_graph
 
 OBJECTIVES = ("cost", "time", "emissions")
-ALGORITHMS = ("dijkstra", "astar", "nsga2", "simulated_annealing")
+ALGORITHMS = ("dijkstra", "astar", "nsga2", "simulated_annealing", "aco")
 METRIC_FIELDS = {
     "cost": "cost",
     "time": "travel_time_hours",
@@ -31,6 +31,8 @@ def route_metrics(
     """Recalculate all metrics from the result's exact edge identities."""
     if not result.feasible or result.nodes[0] != result.source or result.nodes[-1] != result.destination:
         raise AssertionError(f"Invalid route endpoints for {result.algorithm}")
+    if len(set(result.nodes)) != len(result.nodes):
+        raise AssertionError(f"Cyclic route returned by {result.algorithm}")
     if len(result.edge_ids) != len(result.nodes) - 1:
         raise AssertionError(f"Invalid route length for {result.algorithm}")
 
@@ -58,6 +60,8 @@ def run_algorithm(
         parameters = {"population_size": 10, "generations": 3, "seed": 11}
     elif algorithm == "simulated_annealing":
         parameters = {"iterations": 30, "seed": 11}
+    elif algorithm == "aco":
+        parameters = {"ants": 10, "iterations": 30, "seed": 11}
     start = time.perf_counter()
     result = optimize(algorithm, graph, "C01", "C10", objective, **parameters)
     elapsed_ms = (time.perf_counter() - start) * 1000
@@ -78,6 +82,7 @@ def main() -> None:
     print("Source: C01 | Destination: C10")
     print("NSGA-II parameters: population_size=10, generations=3, seed=11")
     print("Simulated Annealing parameters: iterations=30, seed=11")
+    print("ACO parameters: ants=10, iterations=30, seed=11")
 
     for objective in OBJECTIVES:
         print(f"\n=== Objective: {METRIC_LABELS[objective]} ===")
@@ -105,7 +110,7 @@ def main() -> None:
 
         stochastic = {
             algorithm: results[algorithm][1][objective]
-            for algorithm in ("nsga2", "simulated_annealing")
+            for algorithm in ("nsga2", "simulated_annealing", "aco")
         }
         best_algorithm = min(stochastic, key=stochastic.__getitem__)
         print(

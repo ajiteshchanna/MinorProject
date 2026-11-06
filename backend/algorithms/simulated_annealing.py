@@ -35,11 +35,28 @@ def simulated_annealing(
     rng = random.Random(seed)
     candidates = [node for node in graph if node not in {source, destination}]
     waypoint_count = min(2, len(candidates))
-    current = [source] + rng.sample(candidates, waypoint_count) + [destination]
-    try:
-        _, _, _, current_value = route_from_waypoints(graph, current, selected_objective)
-    except nx.NetworkXNoPath as exc:
-        raise ValueError(f"No route from {source} to {destination}") from exc
+    current: list[str] | None = None
+    current_value: float | None = None
+    for _ in range(max(1, len(candidates) * 10)):
+        candidate = [source] + rng.sample(candidates, waypoint_count) + [destination]
+        try:
+            _, _, _, value = route_from_waypoints(
+                graph, candidate, selected_objective
+            )
+        except nx.NetworkXNoPath:
+            continue
+        current = candidate
+        current_value = value
+        break
+    if current is None or current_value is None:
+        current = [source, destination]
+        waypoint_count = 0
+        try:
+            _, _, _, current_value = route_from_waypoints(
+                graph, current, selected_objective
+            )
+        except nx.NetworkXNoPath as exc:
+            raise ValueError(f"No route from {source} to {destination}") from exc
     best = current[:]
     best_value = current_value
     convergence = [best_value]
@@ -49,7 +66,13 @@ def simulated_annealing(
         candidate = current[:]
         if waypoint_count:
             index = rng.randrange(1, len(candidate) - 1)
-            candidate[index] = rng.choice(candidates)
+            occupied = set(candidate[1:-1])
+            occupied.discard(candidate[index])
+            available = [node for node in candidates if node not in occupied]
+            if not available:
+                temperature *= cooling_rate
+                continue
+            candidate[index] = rng.choice(available)
         try:
             _, _, _, candidate_value = route_from_waypoints(
                 graph, candidate, selected_objective

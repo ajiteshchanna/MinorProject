@@ -19,7 +19,7 @@ from .algorithms.common import (
 )
 
 OBJECTIVES = ("cost", "time", "emissions")
-ALGORITHMS = ("dijkstra", "astar", "nsga2", "simulated_annealing")
+ALGORITHMS = ("dijkstra", "astar", "nsga2", "simulated_annealing", "aco")
 ITERATIVE_CONVERGENCE_NOTE = (
     "Dijkstra and A* are single-pass shortest-path searches, so they have no "
     "iterative convergence history."
@@ -27,7 +27,7 @@ ITERATIVE_CONVERGENCE_NOTE = (
 FUNCTION_EVALUATION_NOTE = (
     "NSGA-II counts pymoo evaluator calls (including the initial population); "
     "Simulated Annealing counts the initial route evaluation plus one evaluation "
-    "per iteration."
+    "per iteration; ACO counts ants multiplied by iterations."
 )
 
 
@@ -121,6 +121,8 @@ def validate_route(
             errors.append("route source does not match result.source")
         if result.nodes[-1] != result.destination:
             errors.append("route destination does not match result.destination")
+        if len(set(result.nodes)) != len(result.nodes):
+            errors.append("route revisits a city")
     if len(result.edge_ids) != max(0, len(result.nodes) - 1):
         errors.append("edge count does not match route length")
     if len(result.modes) != len(result.edge_ids):
@@ -232,14 +234,14 @@ def benchmark(
     records: list[BenchmarkRecord] = []
     for algorithm in selected_algorithms:
         warmup_kwargs = dict(kwargs_by_algorithm.get(algorithm, {}))
-        if algorithm in {"nsga2", "simulated_annealing"}:
+        if algorithm in {"nsga2", "simulated_annealing", "aco"}:
             warmup_kwargs.setdefault("seed", 0)
         optimize(
             algorithm, graph, source, destination, selected_objective, **warmup_kwargs
         )
         for run in range(1, repeats + 1):
             kwargs = dict(kwargs_by_algorithm.get(algorithm, {}))
-            if algorithm in {"nsga2", "simulated_annealing"}:
+            if algorithm in {"nsga2", "simulated_annealing", "aco"}:
                 kwargs.setdefault("seed", run)
             result, elapsed_ms, peak_memory = _measure_execution(
                 graph, algorithm, source, destination, selected_objective, kwargs

@@ -23,14 +23,14 @@ def test_runs_only_selected_dataset_objective_combinations_and_persists(tmp_path
     )
 
     assert result.combination_count == 4
-    assert result.algorithm_execution_count == 16
+    assert result.algorithm_execution_count == 20
     assert set(result.comparison["dataset"]) == {"dataset_10", "dataset_20"}
     assert set(result.comparison["objective"]) == {"cost", "time"}
     assert result.csv_path is not None and result.csv_path.is_file()
     assert result.json_path is not None and result.json_path.is_file()
     payload = json.loads(result.json_path.read_text(encoding="utf-8"))
     assert payload["combination_count"] == 4
-    assert payload["algorithm_execution_count"] == 16
+    assert payload["algorithm_execution_count"] == 20
 
 
 def test_rejects_unselected_or_invalid_inputs_without_running(tmp_path: Path) -> None:

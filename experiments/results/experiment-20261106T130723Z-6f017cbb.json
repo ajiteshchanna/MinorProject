@@ -1,0 +1,214 @@
+{
+  "experiment_id": "experiment-20261106T130723Z-6f017cbb",
+  "experiment_name": "Exp_D60_AHM_AMR",
+  "created_at": "2026-11-06T13:07:23.936424+00:00",
+  "configuration": {
+    "datasets": [
+      "dataset_60"
+    ],
+    "objectives": [
+      "cost"
+    ],
+    "source": "C01",
+    "destination": "C02",
+    "repeats": 1
+  },
+  "combination_count": 1,
+  "algorithm_execution_count": 4,
+  "records": [
+    {
+      "algorithm": "dijkstra",
+      "objective": "cost",
+      "run": 1,
+      "source": "C01",
+      "destination": "C02",
+      "valid": true,
+      "cost": 934.87,
+      "time": 9.84,
+      "emissions": 44.28,
+      "objective_value": 934.87,
+      "optimality_gap": 0.0,
+      "execution_time_ms": 0.42490000487305224,
+      "peak_memory_bytes": 8800,
+      "nodes_explored": null,
+      "function_evaluations": null,
+      "convergence": [],
+      "nodes": [
+        "C01",
+        "C02"
+      ],
+      "edge_ids": [
+        "C01_C02_rail"
+      ],
+      "modes": [
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "astar",
+      "objective": "cost",
+      "run": 1,
+      "source": "C01",
+      "destination": "C02",
+      "valid": true,
+      "cost": 934.87,
+      "time": 9.84,
+      "emissions": 44.28,
+      "objective_value": 934.87,
+      "optimality_gap": 0.0,
+      "execution_time_ms": 0.19779999274760485,
+      "peak_memory_bytes": 3152,
+      "nodes_explored": null,
+      "function_evaluations": null,
+      "convergence": [],
+      "nodes": [
+        "C01",
+        "C02"
+      ],
+      "edge_ids": [
+        "C01_C02_rail"
+      ],
+      "modes": [
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "nsga2",
+      "objective": "cost",
+      "run": 1,
+      "source": "C01",
+      "destination": "C02",
+      "valid": true,
+      "cost": 3696.9999999999995,
+      "time": 39.03999999999999,
+      "emissions": 264.78000000000003,
+      "objective_value": 3696.9999999999995,
+      "optimality_gap": 295.4560527132114,
+      "execution_time_ms": 397.7660999807995,
+      "peak_memory_bytes": 1329152,
+      "nodes_explored": null,
+      "function_evaluations": 30,
+      "convergence": [
+        3696.9999999999995,
+        3696.9999999999995,
+        3696.9999999999995
+      ],
+      "nodes": [
+        "C01",
+        "C04",
+        "C32",
+        "C38",
+        "C40",
+        "C19",
+        "C56",
+        "C57",
+        "C55",
+        "C29",
+        "C10",
+        "C09",
+        "C06",
+        "C02"
+      ],
+      "edge_ids": [
+        "C01_C04_rail",
+        "C04_C32_rail",
+        "C32_C38_rail",
+        "C38_C40_road",
+        "C40_C19_rail",
+        "C19_C56_rail",
+        "C56_C57_rail",
+        "C57_C55_road",
+        "C55_C29_rail",
+        "C29_C10_rail",
+        "C10_C09_rail",
+        "C09_C06_rail",
+        "C06_C02_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail",
+        "rail",
+        "road",
+        "rail",
+        "rail",
+        "rail",
+        "road",
+        "rail",
+        "rail",
+        "rail",
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    },
+    {
+      "algorithm": "simulated_annealing",
+      "objective": "cost",
+      "run": 1,
+      "source": "C01",
+      "destination": "C02",
+      "valid": true,
+      "cost": 3471.7000000000003,
+      "time": 36.61,
+      "emissions": 210.52000000000004,
+      "objective_value": 3471.7000000000003,
+      "optimality_gap": 271.35644528116217,
+      "execution_time_ms": 141.43170000170358,
+      "peak_memory_bytes": 29400,
+      "nodes_explored": null,
+      "function_evaluations": 31,
+      "convergence": [
+        3471.7000000000003,
+        3471.7000000000003,
+        3471.7000000000003,
+        3471.7000000000003,
+        3471.7000000000003,
+        3471.7000000000003,
+        3471.7000000000003,
+        3471.7000000000003,
+        3471.7000000000003,
+        3471.7000000000003
+      ],
+      "nodes": [
+        "C01",
+        "C04",
+        "C05",
+        "C19",
+        "C21",
+        "C14",
+        "C13",
+        "C10",
+        "C09",
+        "C06",
+        "C02"
+      ],
+      "edge_ids": [
+        "C01_C04_rail",
+        "C04_C05_rail",
+        "C05_C19_rail",
+        "C19_C21_road",
+        "C21_C14_rail",
+        "C14_C13_rail",
+        "C13_C10_rail",
+        "C10_C09_rail",
+        "C09_C06_rail",
+        "C06_C02_rail"
+      ],
+      "modes": [
+        "rail",
+        "rail",
+        "rail",
+        "road",
+        "rail",
+        "rail",
+        "rail",
+        "rail",
+        "rail",
+        "rail"
+      ],
+      "dataset": "dataset_60"
+    }
+  ]
+}

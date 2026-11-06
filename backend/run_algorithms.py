@@ -17,8 +17,19 @@ def main() -> None:
     parser.add_argument("--objective", choices=("cost", "time", "emissions"), default="cost")
     args = parser.parse_args()
     graph = load_graph(args.dataset_dir)
-    for algorithm in ("dijkstra", "astar", "nsga2", "simulated_annealing"):
-        result = optimize(algorithm, graph, args.source, args.destination, args.objective)
+    for algorithm in ("dijkstra", "astar", "nsga2", "simulated_annealing", "aco"):
+        kwargs = (
+            {"population_size": 10, "generations": 3}
+            if algorithm == "nsga2"
+            else {"iterations": 30}
+            if algorithm == "simulated_annealing"
+            else {"ants": 5, "iterations": 10}
+            if algorithm == "aco"
+            else {}
+        )
+        result = optimize(
+            algorithm, graph, args.source, args.destination, args.objective, **kwargs
+        )
         print(
             f"{result.algorithm}: objective={result.objective_value:.2f}, "
             f"nodes={' -> '.join(result.nodes)}, modes={','.join(result.modes)}"

@@ -9,7 +9,7 @@ from backend.graph import load_graph
 GRAPH = load_graph(Path(__file__).parents[1] / "datasets" / "processed" / "dataset_10")
 
 
-@pytest.mark.parametrize("algorithm", ("dijkstra", "astar", "nsga2", "simulated_annealing"))
+@pytest.mark.parametrize("algorithm", ("dijkstra", "astar", "nsga2", "simulated_annealing", "aco"))
 @pytest.mark.parametrize("objective", ("cost", "time", "emissions"))
 def test_algorithms_return_standardized_feasible_routes(algorithm: str, objective: str) -> None:
     result = optimize(
@@ -20,6 +20,7 @@ def test_algorithms_return_standardized_feasible_routes(algorithm: str, objectiv
         objective,
         **({"population_size": 10, "generations": 3} if algorithm == "nsga2" else {}),
         **({"iterations": 30} if algorithm == "simulated_annealing" else {}),
+        **({"ants": 5, "iterations": 10} if algorithm == "aco" else {}),
     )
     assert result.algorithm == algorithm
     assert result.objective == objective
@@ -39,6 +40,11 @@ def test_stochastic_algorithms_are_reproducible_with_seed() -> None:
 
     first = optimize("simulated_annealing", GRAPH, "C01", "C10", "time", iterations=30, seed=11)
     second = optimize("simulated_annealing", GRAPH, "C01", "C10", "time", iterations=30, seed=11)
+    assert first.nodes == second.nodes
+    assert first.objective_value == second.objective_value
+
+    first = optimize("aco", GRAPH, "C01", "C10", "emissions", ants=5, iterations=10, seed=11)
+    second = optimize("aco", GRAPH, "C01", "C10", "emissions", ants=5, iterations=10, seed=11)
     assert first.nodes == second.nodes
     assert first.objective_value == second.objective_value
 

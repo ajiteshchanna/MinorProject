@@ -21,6 +21,7 @@ algorithms = [
     "astar",
     "nsga2",
     "simulated_annealing",
+    "aco",
 ]
 
 objectives = ["cost", "time", "emissions"]
@@ -32,6 +33,10 @@ algorithm_kwargs = {
     },
     "simulated_annealing": {
         "iterations": 30,
+    },
+    "aco": {
+        "ants": 5,
+        "iterations": 10,
     },
 }
 
