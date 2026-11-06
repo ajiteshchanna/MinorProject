@@ -487,8 +487,8 @@ def _show_network_overview(dataset: str) -> None:
             height=700,
             use_container_width=True,
             returned_objects=[],
-            center=(21.5, 80.0),
-            zoom=5,
+            center=(21.5, 80.5),
+            zoom=4.75,
             key=f"network_map_{dataset}",
         )
     with mode_col:

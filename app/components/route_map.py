@@ -208,6 +208,8 @@ def _india_map() -> folium.Map:
         max_bounds=True,
         control_scale=False,
         zoom_control=True,
+        zoomSnap=0.25,
+        zoomDelta=0.5,
         **INDIA_BOUNDS,
     )
     for index, (name, url, attribution) in enumerate(TILE_LAYERS):
